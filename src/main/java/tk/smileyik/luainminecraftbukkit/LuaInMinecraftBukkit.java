@@ -1,6 +1,7 @@
 package tk.smileyik.luainminecraftbukkit;
 
 import com.google.common.io.Files;
+import tk.smileyik.luainminecraftbukkit.util.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,15 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     check();
     pluginManager = new LuaPluginManager();
     pluginManager.loadPlugins();
+    setupMetrics();
+  }
+
+  private void setupMetrics() {
+    try {
+      Metrics metrics = new Metrics(this, 14952);
+    } catch (Exception e) {
+
+    }
   }
 
   @Override
