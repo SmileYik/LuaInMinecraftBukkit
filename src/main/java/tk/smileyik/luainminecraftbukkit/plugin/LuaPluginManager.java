@@ -134,10 +134,7 @@ public class LuaPluginManager {
     if (isLoadPlugin(id)) {
       LuaPlugin plugin = loadedPlugins.get(id);
       disablePlugin(id);
-      if (plugin != null && loadPlugin(plugin)) {
-        loadedPlugins.put(id, plugin);
-        return true;
-      }
+      loadPlugin(plugin.getPluginPath().getName());
       return false;
     }
     return true;
@@ -340,7 +337,10 @@ public class LuaPluginManager {
   public void callClosure(String[] vars) {
     LuaValue c = getClosure(vars);
     assert c != LuaValue.NIL;
+    long time = System.currentTimeMillis();
     c.call();
+    time = System.currentTimeMillis() - time;
+    LuaInMinecraftBukkit.debug("called closure %s: %dms", Arrays.toString(vars), time);
   }
 
   /**
