@@ -1,6 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.plugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -91,6 +92,16 @@ public class LuaPlugin {
    */
   public File getPluginPath() {
     return pluginPath;
+  }
+
+  /**
+   * 获取模块的绝对路径.
+   * @param module 模块名(后缀名为lua的文件但是不带后缀名)
+   * @return 模块的完整路径
+   * @throws IOException 如果获取失败则抛出
+   */
+  public String getRequirePath(String module) throws IOException {
+    return getPluginPath().getCanonicalPath() + "/" + module;
   }
 
   /**

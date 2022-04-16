@@ -11,4 +11,13 @@ public class LuaPluginHelper {
   public boolean isLoadPlugin(String id) {
     return LuaInMinecraftBukkit.getPluginManager().isLoadPlugin(id);
   }
+
+  /**
+   * 以指定id对应的函数为run方法主体创建一个Runnable子类实例
+   * @param id 函数路径
+   * @return LuaRunnable实例
+   */
+  public LuaRunnable newLuaRunnable(String id) {
+    return new LuaRunnable(id);
+  }
 }
