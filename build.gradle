@@ -28,7 +28,7 @@ test {
 
 task copyTask(type: Copy) {
     dependsOn(build)
-    from "${buildDir}/libs/LuaInMinecraftBukkt-1.0-SNAPSHOT.jar"
-    println "${projectDir}/server/plugins/LuaInMinecraftBukkt-1.0-SNAPSHOT.jar"
+    from "${buildDir}/libs/LuaInMinecraftBukkit-1.0-SNAPSHOT.jar"
+    println "${projectDir}/server/plugins/LuaInMinecraftBukkit-1.0-SNAPSHOT.jar"
     into "${projectDir}/server/plugins/"
 }
