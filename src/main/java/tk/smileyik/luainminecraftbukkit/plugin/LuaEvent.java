@@ -23,9 +23,8 @@ public abstract class LuaEvent <T extends Event> implements Listener {
       if (ee.getMessage().startsWith("attempt to index ? (a nil value)")) {
         LuaInMinecraftBukkit.debug("未找到闭包: %s, 取消监听此事件...", getId());
         LuaPluginManager.getEventRegister().unregisterEvent(getId());
-      } else {
-        ee.printStackTrace();
       }
+      ee.printStackTrace();
     }
   }
 
