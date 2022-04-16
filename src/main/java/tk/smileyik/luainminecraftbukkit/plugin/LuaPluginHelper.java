@@ -20,4 +20,14 @@ public class LuaPluginHelper {
   public LuaRunnable newLuaRunnable(String id) {
     return new LuaRunnable(id);
   }
+
+  /**
+   * 以指定id对应的函数为run方法主体创建一个Runnable子类实例
+   * @param id 函数路径
+   * @param obj 带入的参数.
+   * @return LuaRunnable实例
+   */
+  public LuaRunnable newLuaRunnable(String id, Object obj) {
+    return new LuaRunnable(id, obj);
+  }
 }
