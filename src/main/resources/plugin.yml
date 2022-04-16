@@ -1,0 +1,11 @@
+name: LuaInMinecraftBukkit
+main: tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit
+version: 1.0
+author: SmileYik
+commands:
+  lua:
+    permission: LuaInMinecraftBukkit.Admin
+  luap:
+permissions:
+  LuaInMinecraftBukkit.Admin:
+    default: op
