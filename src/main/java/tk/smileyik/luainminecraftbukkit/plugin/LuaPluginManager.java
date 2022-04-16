@@ -388,4 +388,8 @@ public class LuaPluginManager {
   public static CommandRegister getCommandRegister() {
     return COMMAND_REGISTER;
   }
+
+  public static EventRegister getEventRegister() {
+    return EVENT_REGISTER;
+  }
 }

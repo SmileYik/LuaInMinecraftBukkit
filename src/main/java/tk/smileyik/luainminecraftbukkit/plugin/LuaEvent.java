@@ -17,11 +17,16 @@ public abstract class LuaEvent <T extends Event> implements Listener {
 
   @EventHandler
   public void event(T e) {
-    LuaInMinecraftBukkit.debug("正在处理事件: " + getId());
-    long time = System.currentTimeMillis();
-    LuaInMinecraftBukkit.getPluginManager().callClosure(vars, CoerceJavaToLua.coerce(e));
-    time = System.currentTimeMillis() - time;
-    System.out.println(getId() + " 事件处理完毕, 耗时: " + time + "ms");
+    try {
+      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, CoerceJavaToLua.coerce(e));
+    } catch (Exception ee) {
+      if (ee.getMessage().startsWith("attempt to index ? (a nil value)")) {
+        LuaInMinecraftBukkit.debug("未找到闭包: %s, 取消监听此事件...", getId());
+        LuaPluginManager.getEventRegister().unregisterEvent(getId());
+      } else {
+        ee.printStackTrace();
+      }
+    }
   }
 
   public String getId() {
