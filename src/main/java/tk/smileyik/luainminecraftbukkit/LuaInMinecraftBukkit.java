@@ -9,18 +9,17 @@ import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
 
 public class LuaInMinecraftBukkit extends JavaPlugin {
   private static LuaInMinecraftBukkit instance;
   private LuaPluginManager pluginManager;
-  private boolean debug;
+  private boolean debug = false;
 
   /**
    * 是否需要打开Debug.
    */
   private void check() {
-    debug = new File(getDataFolder(), "debug").exists();
+    debug = new File(getDataFolder(), "debug").isFile();
   }
 
   @Override

@@ -4,15 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.*;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 
+import java.io.IOException;
 import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EventRegister {
   private static final Map<String, List<LuaEvent<? extends Event>>> events = new HashMap<>();
-
+  private static final Properties EVENT_MAPPER = new Properties();
   public static final EventPriority[] PRIORITIES = {
           EventPriority.LOWEST,
           EventPriority.LOW,
@@ -22,6 +20,19 @@ public class EventRegister {
           EventPriority.MONITOR
   };
 
+  static {
+    try {
+      EVENT_MAPPER.load(EventRegister.class.getResourceAsStream("/events.properties"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * 注册事件.
+   * @param listener 监听器
+   * @param priority 优先级, 范围为[0, 5], 不再此区间内则为正常默认等级.
+   */
   private void registerEvent(LuaEvent<? extends Event> listener, int priority) {
     if (priority >= 0 && priority <= 5) {
       try {
@@ -46,7 +57,7 @@ public class EventRegister {
           Field memberValues = invocationHandler.getClass().getDeclaredField("memberValues");
           memberValues.setAccessible(true);
           ((Map) memberValues.get(invocationHandler)).put("priority", PRIORITIES[priority]);
-          System.out.println(handler.priority());
+          LuaInMinecraftBukkit.debug("注册事件优先级: %s; 闭包: %s", handler.priority(), listener.getId());
         }
       } catch (NoSuchFieldException e) {
         throw new RuntimeException(e);
@@ -65,10 +76,27 @@ public class EventRegister {
     Bukkit.getServer().getPluginManager().registerEvents(listener, LuaInMinecraftBukkit.getInstance());
   }
 
+  /**
+   * 注册监听事件.
+   * @param event 要注册的事件.
+   * @param id 闭包id
+   * @param priority 优先级, 范围为[0, 5], 不再此区间内则为正常默认等级.
+   * @throws ClassNotFoundException 当要注册的事件不存在则抛出.
+   * @throws NoSuchMethodException 当要注册的事件不存在则抛出.
+   * @throws InvocationTargetException 当要注册的事件不存在则抛出.
+   * @throws InstantiationException 当要注册的事件不存在则抛出.
+   * @throws IllegalAccessException 当要注册的事件不存在则抛出.
+   */
   public void registerListener(String event, String id, int priority) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-    String classPath = event.startsWith(".") ?
-            ("tk.smileyik.luainminecraftbukkit.bridge.event" + event) :
-            event;
+    String classPath;
+    if (EVENT_MAPPER.containsKey(event)) {
+      classPath = EVENT_MAPPER.getProperty(event);
+    } else {
+      classPath = event.startsWith(".") ?
+              ("tk.smileyik.luainminecraftbukkit.bridge.event" + event) :
+              event;
+    }
+
     final LuaEvent<? extends Event> listener =
             (LuaEvent<? extends Event>) Class.forName(classPath).getDeclaredConstructor(String.class).newInstance(id);
     registerEvent(listener, priority);

@@ -134,8 +134,7 @@ public class LuaPluginManager {
     if (isLoadPlugin(id)) {
       LuaPlugin plugin = loadedPlugins.get(id);
       disablePlugin(id);
-      assert plugin != null;
-      if (loadPlugin(plugin)) {
+      if (plugin != null && loadPlugin(plugin)) {
         loadedPlugins.put(id, plugin);
         return true;
       }
@@ -173,20 +172,16 @@ public class LuaPluginManager {
       try {
         plugin = checkPlugin(file);
       } catch (RuntimeException e) {
-        throw new RuntimeException(e);
+        e.printStackTrace();
+        continue;
       }
       if (loadFailed) {
-        throw new RuntimeException(plugin.getId() + ": 没有找到插件的必要依赖.");
+        LuaInMinecraftBukkit.debug(plugin.getId() + ": 没有找到插件的必要依赖.");
+        return;
+      } else if (!loadPlugin(plugin)) {
+        queue.add(file);
       } else {
-        try {
-          if (!loadPlugin(plugin)) {
-            queue.add(file);
-          } else {
-            loadedPlugins.put(plugin.getId(), plugin);
-          }
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
+        loadedPlugins.put(plugin.getId(), plugin);
       }
 
       if (--waitToLoad == 0) {
@@ -212,10 +207,9 @@ public class LuaPluginManager {
   /**
    * 加载一个脚本插件.
    * @param plugin 脚本插件.
-   * @return 如果加载成功则返回true.加载失败返回false.
-   * @throws IOException 加载中出错则抛出.
+   * @return 如果加载成功或者插件已经被加载则返回true.加载失败返回false.
    */
-  public boolean loadPlugin(LuaPlugin plugin) throws IOException {
+  public boolean loadPlugin(LuaPlugin plugin) {
     if (!checkDependents(plugin)) {
       return false;
     } else if (isLoadPlugin(plugin.getId())) {
@@ -229,33 +223,44 @@ public class LuaPluginManager {
             plugin.getVersion()
     );
 
-    // 生成环境
-    Globals pluginGlobals =
-            LuaInMinecraftBukkit.isDebug() ? JsePlatform.debugGlobals() : JsePlatform.standardGlobals();
-    pluginGlobals.set("luaBukkit", LUA_BUKKIT);
-    for (String dependent : plugin.getDependents()) {
-      pluginGlobals.set(dependent, globals.get(dependent));
-    }
-    for (String softDependent : plugin.getSoftDependents()) {
-      pluginGlobals.set(softDependent, globals.get(softDependent));
-    }
-    pluginGlobals.set("self", LuaValueHelper.valueOf(plugin));
-    // 环境生成完毕
-    LuaValue func = pluginGlobals.loadfile(
-            new File(plugin.getPluginPath(), PLUGIN_MAIN).getCanonicalPath()
-    );
-    globals.set(plugin.getId(), pluginGlobals);
-    func.call();
-    LuaInMinecraftBukkit.log(
-            "正在启用插件: %s(%s), 作者: %s, 版本: %s",
-            plugin.getDisplayName(),
-            plugin.getId(),
-            plugin.getAuthor(),
-            plugin.getVersion()
-    );
-    LuaValue enableFunction = pluginGlobals.get(ENABLE_FUNCTION);
-    if (!enableFunction.isnil()) {
-      enableFunction.call();
+    try {
+      // 生成环境
+      Globals pluginGlobals =
+              LuaInMinecraftBukkit.isDebug() ? JsePlatform.debugGlobals() : JsePlatform.standardGlobals();
+      pluginGlobals.set("luaBukkit", LUA_BUKKIT);
+      for (String dependent : plugin.getDependents()) {
+        pluginGlobals.set(dependent, globals.get(dependent));
+      }
+      for (String softDependent : plugin.getSoftDependents()) {
+        pluginGlobals.set(softDependent, globals.get(softDependent));
+      }
+      pluginGlobals.set("self", LuaValueHelper.valueOf(plugin));
+      // 环境生成完毕
+      LuaValue func = null;
+      try {
+        func = pluginGlobals.loadfile(
+                new File(plugin.getPluginPath(), PLUGIN_MAIN).getCanonicalPath()
+        );
+      } catch (IOException e) {
+        e.printStackTrace();
+        return false;
+      }
+      globals.set(plugin.getId(), pluginGlobals);
+      func.call();
+      LuaInMinecraftBukkit.log(
+              "正在启用插件: %s(%s), 作者: %s, 版本: %s",
+              plugin.getDisplayName(),
+              plugin.getId(),
+              plugin.getAuthor(),
+              plugin.getVersion()
+      );
+      LuaValue enableFunction = pluginGlobals.get(ENABLE_FUNCTION);
+      if (!enableFunction.isnil()) {
+        enableFunction.call();
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
     }
     return true;
   }

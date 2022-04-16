@@ -3,14 +3,19 @@ package tk.smileyik.luainminecraftbukkit.bridge.event;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class EventHelper {
   public static void start() {
     try {
+      Map<String, String> map = new HashMap<>();
       ZipFile zipFile = new ZipFile(new File("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/server/cache/patched_1.12.2.jar"));
       Enumeration<? extends ZipEntry> entries = zipFile.entries();
       while (entries.hasMoreElements()) {
@@ -40,11 +45,22 @@ public class EventHelper {
           sb.append("  public void event(").append(second).append(" e) {super.event(e);}\n");
           sb.append("}");
 
-          LuaInMinecraftBukkit.writeToFile(sb.toString(), "test/" + filePath);
+          String fullLuaClass = first + ".Lua" + second;
+          String fullBukkitClass = second;
+          map.put(fullBukkitClass, fullLuaClass);
+          toProperties(map);
+
+          // LuaInMinecraftBukkit.writeToFile(sb.toString(), "test/" + filePath);
         }
       }
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static void toProperties(Map<String, String> map) throws IOException {
+    Properties properties = new Properties();
+    map.forEach(properties::setProperty);
+    properties.store(new FileWriter("events.properties"), "events");
   }
 }
