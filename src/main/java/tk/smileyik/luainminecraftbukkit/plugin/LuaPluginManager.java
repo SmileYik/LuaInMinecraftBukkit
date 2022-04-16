@@ -20,7 +20,7 @@ import java.util.*;
 public class LuaPluginManager {
   private static final LuaValue LUA_BUKKIT;
   private static final String PLUGIN_MAIN = "main.lua";
-  private static final String PLUGIN_META = "plugin.yml";
+  private static final String PLUGIN_META = "lua_plugin.yml";
   private static final String ENABLE_FUNCTION = "onEnable";
   private static final String DISABLE_FUNCTION = "onDisable";
   private static final String CONFIG_PATH = "config";
