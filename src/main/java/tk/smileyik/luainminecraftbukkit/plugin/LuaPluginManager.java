@@ -103,11 +103,17 @@ public class LuaPluginManager {
   public void disablePlugin(String id) {
     LuaValue pluginFunc = globals.get(id);
     loadedPlugins.remove(id);
+
     if (!pluginFunc.isnil()) {
       LuaValue disableFunc = pluginFunc.get(DISABLE_FUNCTION);
       if (!disableFunc.isnil()) {
-        disableFunc.call();
-        EVENT_REGISTER.unregisterAll(id);
+        try {
+          disableFunc.call();
+        } catch (Exception e) {
+          e.printStackTrace();
+        } finally {
+          EVENT_REGISTER.unregisterAll(id);
+        }
         // TODO task
       }
       globals.set(id, LuaValue.NIL);
@@ -256,6 +262,7 @@ public class LuaPluginManager {
         enableFunction.call();
       }
     } catch (Exception e) {
+      disablePlugin(plugin.getId());
       e.printStackTrace();
       return false;
     }

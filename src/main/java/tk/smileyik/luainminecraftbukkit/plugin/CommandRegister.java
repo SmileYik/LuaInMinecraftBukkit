@@ -35,6 +35,7 @@ public class CommandRegister {
       if (commandMapper.containsKey(label)) {
         LuaInMinecraftBukkit.getPluginManager().callClosure(
                 commandMapper.get(label),
+
                 LuaValueHelper.toTable(
                         "isPlayer", sender instanceof Player,
                         "sender", sender,
