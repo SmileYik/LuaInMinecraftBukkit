@@ -41,7 +41,7 @@ LuaInMinecraftBukkit是一个可以让Minecraft Bukkit服务端及其的延伸�
 
 ##### 第二种模式去执行相同的方法(在服务器中运行)
 
-![lua](https://blog.smileyik.tk/blogs/blogs/other/markdowns/Minecraft/LuaInMinecraftBukkit/LuaInMinecraftBukkit/oxgyr3.png)
+![lua](https://blog.smileyik.tk/blogs/other/markdowns/Minecraft/LuaInMinecraftBukkit/LuaInMinecraftBukkit/oxgyr3.png)
 
 ##### 第一种模式去执行相同的方法(在服务器中运行)
 
