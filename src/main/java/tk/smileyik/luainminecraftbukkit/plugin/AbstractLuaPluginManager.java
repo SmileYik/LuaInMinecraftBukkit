@@ -53,7 +53,7 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
    */
   @Override
   public void disableAllPlugins() {
-    loadedPlugins.forEach((id, plug) -> {
+    new HashMap<>(loadedPlugins).forEach((id, plug) -> {
       disablePlugin(id);
     });
     loadedPlugins.clear();

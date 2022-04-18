@@ -41,7 +41,6 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
                     "creatureSpawner", CoerceJavaToLua.coerce(new LuaBlockCreatureSpawner()),
                     "endGateway", CoerceJavaToLua.coerce(new LuaBlockEndGateway()),
                     "jukebox", CoerceJavaToLua.coerce(new LuaBlockJukebox()),
-                    "noteBlock", CoerceJavaToLua.coerce(new LuaBlockNoteBlock()),
                     "sign", CoerceJavaToLua.coerce(new LuaBlockSign()),
                     "skull", CoerceJavaToLua.coerce(new LuaBlockSkull()),
                     "structure", CoerceJavaToLua.coerce(new LuaBlockStructure()),

@@ -13,12 +13,6 @@ import java.util.List;
 
 public class LuaBlock {
   // TODO BLOCK BEGIN
-  @Deprecated
-  public boolean setTypeIdAndData(LuaValue location, int type, byte id, boolean applyPhysics) {
-    Block block = LuaValueHelper.toBlock(location);
-    assert block != null;
-    return block.setTypeIdAndData(type, id, applyPhysics);
-  }
 
   public byte getLightFromSky(LuaValue location) {
     Block block = LuaValueHelper.toBlock(location);
@@ -163,20 +157,6 @@ public class LuaBlock {
     return block.getZ();
   }
 
-  @Deprecated
-  public void setData(LuaValue location, byte data) {
-    Block block = LuaValueHelper.toBlock(location);
-    assert block != null;
-    block.setData(data);
-  }
-
-  @Deprecated
-  public void setData(LuaValue location, byte data, boolean flag) {
-    Block block = LuaValueHelper.toBlock(location);
-    assert block != null;
-    block.setData(data, flag);
-  }
-
   public boolean isLiquid(LuaValue location) {
     Block block = LuaValueHelper.toBlock(location);
     assert block != null;
@@ -211,27 +191,6 @@ public class LuaBlock {
     Block block = LuaValueHelper.toBlock(location);
     assert block != null;
     return block.getBlockPower(BlockFace.valueOf(blockFace));
-  }
-
-  @Deprecated
-  public int getTypeId(LuaValue location) {
-    Block block = LuaValueHelper.toBlock(location);
-    assert block != null;
-    return block.getTypeId();
-  }
-
-  @Deprecated
-  public boolean setTypeId(LuaValue location, int arg0, boolean arg1) {
-    Block block = LuaValueHelper.toBlock(location);
-    assert block != null;
-    return block.setTypeId(arg0, arg1);
-  }
-
-  @Deprecated
-  public boolean setTypeId(LuaValue location, int arg0) {
-    Block block = LuaValueHelper.toBlock(location);
-    assert block != null;
-    return block.setTypeId(arg0);
   }
 
   public String getPistonMoveReaction(LuaValue location) {
@@ -300,11 +259,9 @@ public class LuaBlock {
             CommandBlock.class,
             Structure.class,
             Jukebox.class,
-            FlowerPot.class,
             DaylightDetector.class,
             EnchantingTable.class,
             Bed.class,
-            NoteBlock.class,
             EnderChest.class,
             Skull.class,
             Container.class,

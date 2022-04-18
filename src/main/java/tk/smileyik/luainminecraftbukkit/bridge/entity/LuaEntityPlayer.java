@@ -312,15 +312,6 @@ public class LuaEntityPlayer {
     );
   }
 
-  @Deprecated
-  public void sendBlockChange(String uuid, LuaValue location, int arg1, byte arg2) {
-    ((Player) getEntity(uuid)).sendBlockChange(
-            LuaValueHelper.toLocation(location),
-            arg1,
-            arg2
-    );
-  }
-
   public boolean sendChunkChange(String uuid, LuaValue location, int arg1, int arg2, int arg3, byte[] arg4) {
     return ((Player) getEntity(uuid)).sendChunkChange(
             LuaValueHelper.toLocation(location),
@@ -490,18 +481,6 @@ public class LuaEntityPlayer {
 
   public void sendTitle(String uuid, String arg0, String arg1) {
     ((Player) getEntity(uuid)).sendTitle(arg0, arg1);
-  }
-
-  public void awardAchievement(String uuid, String arg0) {
-    ((Player) getEntity(uuid)).awardAchievement(Achievement.valueOf(arg0));
-  }
-
-  public void removeAchievement(String uuid, String arg0) {
-    ((Player) getEntity(uuid)).removeAchievement(Achievement.valueOf(arg0));
-  }
-
-  public boolean hasAchievement(String uuid, String arg0) {
-    return ((Player) getEntity(uuid)).hasAchievement(Achievement.valueOf(arg0));
   }
 
   public void incrementStatistic(String uuid, String statistic, String entityType, int arg2) {

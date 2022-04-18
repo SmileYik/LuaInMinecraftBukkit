@@ -113,7 +113,6 @@ public class LuaValueHelper {
       return LuaValue.NIL;
     }
     LuaValue value = LuaValue.tableOf();
-    value.set("title", inventory.getTitle());
     value.set("type", inventory.getType().name());
     if (inventory.getLocation() != null) {
       value.set("location", valueOf(inventory.getLocation()));
@@ -239,8 +238,7 @@ public class LuaValueHelper {
             luaValue.get("duration").toint(),
             luaValue.get("amplifier").toint(),
             ambient,
-            particles,
-            color
+            particles
     );
   }
 

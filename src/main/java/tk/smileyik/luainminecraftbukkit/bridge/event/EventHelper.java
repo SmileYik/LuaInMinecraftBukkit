@@ -1,5 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.bridge.event;
 
+import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,12 +16,12 @@ public class EventHelper {
   public static void start() {
     try {
       Map<String, String> map = new HashMap<>();
-      ZipFile zipFile = new ZipFile(new File("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/server/cache/patched_1.12.2.jar"));
+      ZipFile zipFile = new ZipFile(new File("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/server/paper-1.12.2-1620.jarlua"));
       Enumeration<? extends ZipEntry> entries = zipFile.entries();
       while (entries.hasMoreElements()) {
         ZipEntry zipEntry = entries.nextElement();
         String str = (String) zipEntry.toString();
-        if (str.startsWith("org/bukkit/event") && str.endsWith(".class")) {
+        if (str.startsWith("org/bukkit/event") && str.endsWith("Event.class")) {
           StringBuilder sb = new StringBuilder();
           String pak = str.substring(0, str.length() - 6).replace("/", ".");
           String root = "tk.smileyik.luainminecraftbukkit.bridge.event";
@@ -35,7 +37,7 @@ public class EventHelper {
           sb.append("package ").append(first).append(";\n\n");
           sb.append("import org.bukkit.event.EventHandler;\n")
                           .append("import ").append(pak).append(";\n")
-                          .append("import tk.smileyik.luainminecraftbukkit.plugin.sub.LuaEvent;\n\n");
+                          .append("import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;\n\n");
 
           sb.append("public class Lua").append(second).append(" extends LuaEvent<").append(second).append("> {\n\n");
           sb.append("  public Lua").append(second).append("(String id) {super(id);}\n\n");
@@ -48,7 +50,7 @@ public class EventHelper {
           map.put(fullBukkitClass, fullLuaClass);
           toProperties(map);
 
-          // LuaInMinecraftBukkit.writeToFile(sb.toString(), "test/" + filePath);
+          LuaInMinecraftBukkit.writeToFile(sb.toString(), "events/" + filePath);
         }
       }
     } catch (IOException e) {
