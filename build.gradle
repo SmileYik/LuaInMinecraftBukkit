@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'tk.smileyik'
-version '1.2'
+version '1.3'
 
 repositories {
     maven {
@@ -33,7 +33,7 @@ test {
 
 task copyTask(type: Copy) {
     dependsOn(build)
-    from "${buildDir}/libs/LuaInMinecraftBukkit-1.2.jar"
-    println "${projectDir}/server/plugins/LuaInMinecraftBukkit-1.2.jar"
+    from "${buildDir}/libs/LuaInMinecraftBukkit-1.3.jar"
+    println "${projectDir}/server/plugins/LuaInMinecraftBukkit-1.3.jar"
     into "${projectDir}/server/plugins/"
 }

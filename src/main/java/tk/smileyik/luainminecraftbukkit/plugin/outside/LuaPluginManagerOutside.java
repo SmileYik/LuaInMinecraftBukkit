@@ -37,7 +37,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
               id, DISABLE_FUNCTION
       });
     } catch (Exception e) {
-      if (!loadedPlugins.containsKey(id)) {
+      if (loadedPlugins.containsKey(id)) {
         throw new RuntimeException(e);
       }
     } finally {
@@ -72,7 +72,6 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
     try {
       LuaState pluginGlobals = LuaStateFactory.newLuaState();
       pluginGlobals.openLibs();
-
       setLuaBukkit(pluginGlobals);
       // 生成环境
       for (String dependent : plugin.getDependents()) {
@@ -108,9 +107,13 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
               plugin.getAuthor(),
               plugin.getVersion()
       );
-      callClosure(new String[]{
-              plugin.getId(), ENABLE_FUNCTION
-      });
+      try {
+        callClosure(new String[]{
+                plugin.getId(), ENABLE_FUNCTION
+        });
+      } catch (Exception e) {
+        // 当没有onEnable函数时什么都不做
+      }
     } catch (Exception e) {
       e.printStackTrace();
       return false;

@@ -33,14 +33,28 @@ public class LuaPluginHelper {
     return new LuaRunnable(id, obj);
   }
 
+  /**
+   * 获取本插件实例对象.
+   * @return 本插件的实例对象.
+   */
   public Plugin getPlugin() {
     return LuaInMinecraftBukkit.getInstance();
   }
 
+  /**
+   * 通过全类名去获取java类类型.
+   * @param name 全类名
+   * @return 如果类存在则返回对应的类
+   * @throws ClassNotFoundException 当找不到指定路径的类则抛出.
+   */
   public Class<?> getClass(String name) throws ClassNotFoundException {
     return Class.forName(name);
   }
 
+  /**
+   * 插件是否在Native模式下运行.
+   * @return 如果是在Native模式下运行则返回true.
+   */
   public boolean isNativeMode() {
     return LuaInMinecraftBukkit.getPluginManager() instanceof LuaPluginManagerOutside;
   }

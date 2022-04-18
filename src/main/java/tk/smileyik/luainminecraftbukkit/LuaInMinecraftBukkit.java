@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import tk.smileyik.luainminecraftbukkit.bridge.event.EventHelper;
 import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
+import tk.smileyik.luainminecraftbukkit.test.LoopTest;
 import tk.smileyik.luainminecraftbukkit.util.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -119,6 +120,13 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
       } else if (args.length == 1) {
         if (args[0].equalsIgnoreCase("spawnEvents")) {
           EventHelper.start();
+          return true;
+        }
+      } else if (args.length == 3) {
+        if (args[0].equalsIgnoreCase("testLoop")) {
+          getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            LoopTest.doLoop(sender, args[2], args[1]);
+          });
           return true;
         }
       }

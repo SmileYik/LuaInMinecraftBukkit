@@ -1,7 +1,6 @@
 package tk.smileyik.luainminecraftbukkit.plugin;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.keplerproject.luajava.LuaObject;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.plugin.inside.LuaPluginInside;
 import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
