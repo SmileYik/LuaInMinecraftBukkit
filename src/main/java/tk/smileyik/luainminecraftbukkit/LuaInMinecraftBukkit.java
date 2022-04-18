@@ -1,11 +1,13 @@
 package tk.smileyik.luainminecraftbukkit;
 
 import com.google.common.io.Files;
+import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
+import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.util.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
+import tk.smileyik.luainminecraftbukkit.plugin.inside.LuaPluginManagerInside;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +17,20 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
   private static LuaInMinecraftBukkit instance;
   private LuaPluginManager pluginManager;
   private boolean debug = false;
+  private boolean nativeMode = false;
 
   /**
    * 是否需要打开Debug.
    */
   private void check() {
+    if (!getDataFolder().exists()) {
+      getDataFolder().mkdirs();
+    }
+    if (!new File(getDataFolder(), "config.yml").exists()) {
+      saveDefaultConfig();
+    }
+    reloadConfig();
+    nativeMode = getConfig().getBoolean("native-mode", false);
     debug = new File(getDataFolder(), "debug").isFile();
   }
 
@@ -27,11 +38,43 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
   public void onEnable() {
     instance = this;
     check();
-    pluginManager = new LuaPluginManager();
-    pluginManager.loadPlugins();
     setupMetrics();
+    if (nativeMode) {
+      setupNativeMode();
+    } else {
+      setupDefaultMode();
+    }
   }
 
+  /**
+   * 加载Native模式.
+   * 如果Native模式加载失败则加载默认模式
+   */
+  public void setupNativeMode() {
+    getLogger().info("蓝色小猫想出去看看");
+    try {
+      pluginManager = new LuaPluginManagerOutside();
+    } catch (Exception e) {
+      e.printStackTrace();
+      getLogger().warning("蓝色小猫出不去, 只能呆在里面了.");
+      setupDefaultMode();
+      return;
+    }
+    pluginManager.loadPlugins();
+  }
+
+  /**
+   * 加载默认模式.
+   */
+  public void setupDefaultMode() {
+    getLogger().info("蓝色小猫乖乖的呆在里面啦.");
+    pluginManager = new LuaPluginManagerInside();
+    pluginManager.loadPlugins();
+  }
+
+  /**
+   * 启用bStats.
+   */
   private void setupMetrics() {
     try {
       Metrics metrics = new Metrics(this, 14952);
@@ -75,10 +118,10 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
       }
       sender.sendMessage(new String[]{
               "/lua reload \t 重载插件",
-              "/lua reload <脚本id> \t 重载脚本",
-              "/lua load <文件夹名> \t 加载脚本",
-              "/lua unload <脚本id> \t 卸载脚本",
-              "/lua info <脚本id> \t 显示脚本信息"
+              "/lua reload \t <脚本id> \t 重载脚本",
+              "/lua load \t <文件夹名> \t 加载脚本",
+              "/lua unload \t <脚本id> \t 卸载脚本",
+              "/lua info \t <脚本id> \t 显示脚本信息"
       });
       return true;
     } else if (label.equalsIgnoreCase("luap")) {

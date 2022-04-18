@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.bridge.event.vehicle;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;
+import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;
 
 public class LuaVehicleExitEvent extends LuaEvent<VehicleExitEvent> {
 

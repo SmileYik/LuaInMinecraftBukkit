@@ -1,6 +1,8 @@
-package tk.smileyik.luainminecraftbukkit.plugin;
+package tk.smileyik.luainminecraftbukkit.plugin.util;
 
+import org.bukkit.plugin.Plugin;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
 
 public class LuaPluginHelper {
   /**
@@ -29,5 +31,17 @@ public class LuaPluginHelper {
    */
   public LuaRunnable newLuaRunnable(String id, Object obj) {
     return new LuaRunnable(id, obj);
+  }
+
+  public Plugin getPlugin() {
+    return LuaInMinecraftBukkit.getInstance();
+  }
+
+  public Class<?> getClass(String name) throws ClassNotFoundException {
+    return Class.forName(name);
+  }
+
+  public boolean isNativeMode() {
+    return LuaInMinecraftBukkit.getPluginManager() instanceof LuaPluginManagerOutside;
   }
 }

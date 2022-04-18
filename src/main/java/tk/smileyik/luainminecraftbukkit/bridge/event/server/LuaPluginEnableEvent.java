@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.bridge.event.server;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.server.PluginEnableEvent;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;
+import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;
 
 public class LuaPluginEnableEvent extends LuaEvent<PluginEnableEvent> {
 

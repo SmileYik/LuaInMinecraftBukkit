@@ -1,6 +1,6 @@
 name: LuaInMinecraftBukkit
 main: tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit
-version: 1.1-SNAPSHOT
+version: 1.2
 author: SmileYik
 commands:
   lua:

@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.bridge.event.block;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;
+import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;
 
 public class LuaBlockPhysicsEvent extends LuaEvent<BlockPhysicsEvent> {
 

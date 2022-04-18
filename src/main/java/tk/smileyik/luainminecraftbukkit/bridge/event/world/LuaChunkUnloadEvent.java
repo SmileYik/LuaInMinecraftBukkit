@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.bridge.event.world;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;
+import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;
 
 public class LuaChunkUnloadEvent extends LuaEvent<ChunkUnloadEvent> {
 

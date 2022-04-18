@@ -1,7 +1,5 @@
 package tk.smileyik.luainminecraftbukkit.bridge.event;
 
-import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,7 +35,7 @@ public class EventHelper {
           sb.append("package ").append(first).append(";\n\n");
           sb.append("import org.bukkit.event.EventHandler;\n")
                           .append("import ").append(pak).append(";\n")
-                          .append("import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;\n\n");
+                          .append("import tk.smileyik.luainminecraftbukkit.plugin.sub.LuaEvent;\n\n");
 
           sb.append("public class Lua").append(second).append(" extends LuaEvent<").append(second).append("> {\n\n");
           sb.append("  public Lua").append(second).append("(String id) {super(id);}\n\n");

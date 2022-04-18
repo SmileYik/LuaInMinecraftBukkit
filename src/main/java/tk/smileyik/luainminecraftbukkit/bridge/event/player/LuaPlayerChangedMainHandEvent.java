@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.bridge.event.player;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedMainHandEvent;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;
+import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;
 
 public class LuaPlayerChangedMainHandEvent extends LuaEvent<PlayerChangedMainHandEvent> {
   public LuaPlayerChangedMainHandEvent(String id) {

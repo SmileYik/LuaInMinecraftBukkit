@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.bridge.event.inventory;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import tk.smileyik.luainminecraftbukkit.plugin.LuaEvent;
+import tk.smileyik.luainminecraftbukkit.plugin.event.LuaEvent;
 
 public class LuaPrepareItemCraftEvent extends LuaEvent<PrepareItemCraftEvent> {
 

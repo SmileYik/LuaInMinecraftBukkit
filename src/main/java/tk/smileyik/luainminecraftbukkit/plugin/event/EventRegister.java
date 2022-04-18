@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.plugin;
+package tk.smileyik.luainminecraftbukkit.plugin.event;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.*;

@@ -1,10 +1,9 @@
-package tk.smileyik.luainminecraftbukkit.plugin;
+package tk.smileyik.luainminecraftbukkit.plugin.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-import tk.smileyik.luainminecraftbukkit.util.LuaValueHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,12 +34,9 @@ public class CommandRegister {
       if (commandMapper.containsKey(label)) {
         LuaInMinecraftBukkit.getPluginManager().callClosure(
                 commandMapper.get(label),
-
-                LuaValueHelper.toTable(
-                        "isPlayer", sender instanceof Player,
-                        "sender", sender,
-                        "args", LuaValueHelper.asList(args)
-                )
+                sender instanceof Player,
+                sender,
+                args
         );
       }
     }

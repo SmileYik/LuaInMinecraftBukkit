@@ -1,7 +1,6 @@
-package tk.smileyik.luainminecraftbukkit.plugin;
+package tk.smileyik.luainminecraftbukkit.plugin.util;
 
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-import tk.smileyik.luainminecraftbukkit.util.LuaValueHelper;
 
 public class LuaRunnable implements Runnable {
   private final String id;
@@ -23,7 +22,7 @@ public class LuaRunnable implements Runnable {
   public void run() {
     LuaInMinecraftBukkit.getPluginManager().callClosure(
             vars,
-            LuaValueHelper.valueOf(obj)
+            obj
     );
   }
 

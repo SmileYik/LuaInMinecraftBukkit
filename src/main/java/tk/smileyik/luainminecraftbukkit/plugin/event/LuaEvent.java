@@ -1,10 +1,10 @@
-package tk.smileyik.luainminecraftbukkit.plugin;
+package tk.smileyik.luainminecraftbukkit.plugin.event;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
 
 public abstract class LuaEvent <T extends Event> implements Listener {
   private final String id;
@@ -18,7 +18,7 @@ public abstract class LuaEvent <T extends Event> implements Listener {
   @EventHandler
   public void event(T e) {
     try {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, CoerceJavaToLua.coerce(e));
+      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, e);
     } catch (Exception ee) {
       if (ee.getMessage().startsWith("attempt to index ? (a nil value)")) {
         LuaInMinecraftBukkit.debug("未找到闭包: %s, 取消监听此事件...", getId());
