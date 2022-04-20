@@ -1,15 +1,14 @@
 package tk.smileyik.luainminecraftbukkit.plugin.inside;
 
 import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaFunction;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-import tk.smileyik.luainminecraftbukkit.bridge.block.*;
-import tk.smileyik.luainminecraftbukkit.bridge.block.container.*;
-import tk.smileyik.luainminecraftbukkit.bridge.entity.*;
 import tk.smileyik.luainminecraftbukkit.plugin.AbstractLuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.plugin.LuaPlugin;
+import tk.smileyik.luainminecraftbukkit.plugin.exception.LuaFunctionIllegalException;
 import tk.smileyik.luainminecraftbukkit.plugin.util.LuaPluginHelper;
 import tk.smileyik.luainminecraftbukkit.util.LuaValueHelper;
 
@@ -23,36 +22,14 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
 
   static {
     LUA_BUKKIT = LuaValueHelper.toTable(
-            "pluginHelper", CoerceJavaToLua.coerce(new LuaPluginHelper()),
+            "pluginHelper", CoerceJavaToLua.coerce(LuaPluginHelper.class), //弃用, 被helper替代
+            "helper", CoerceJavaToLua.coerce(LuaPluginHelper.class),
             "server", CoerceJavaToLua.coerce(LuaInMinecraftBukkit.getInstance().getServer()),
-            "eventRegister", CoerceJavaToLua.coerce(EVENT_REGISTER),
-            "commandRegister", CoerceJavaToLua.coerce(COMMAND_REGISTER),
-            "entities", LuaValueHelper.toTable(
-                    "entity", CoerceJavaToLua.coerce(new LuaEntity()),
-                    "damageable", CoerceJavaToLua.coerce(new LuaEntityDamageable()),
-                    "human", CoerceJavaToLua.coerce(new LuaEntityHumanEntity()),
-                    "player", CoerceJavaToLua.coerce(new LuaEntityPlayer()),
-                    "living", CoerceJavaToLua.coerce(new LuaEntityLiving())
-            ),
-            "blocks", LuaValueHelper.toTable(
-                    "block", CoerceJavaToLua.coerce(new LuaBlock()),
-                    "banner", CoerceJavaToLua.coerce(new LuaBlockBanner()),
-                    "commandBlock", CoerceJavaToLua.coerce(new LuaBlockCommandBlock()),
-                    "creatureSpawner", CoerceJavaToLua.coerce(new LuaBlockCreatureSpawner()),
-                    "endGateway", CoerceJavaToLua.coerce(new LuaBlockEndGateway()),
-                    "jukebox", CoerceJavaToLua.coerce(new LuaBlockJukebox()),
-                    "sign", CoerceJavaToLua.coerce(new LuaBlockSign()),
-                    "skull", CoerceJavaToLua.coerce(new LuaBlockSkull()),
-                    "structure", CoerceJavaToLua.coerce(new LuaBlockStructure()),
-                    "container", CoerceJavaToLua.coerce(new LuaBlockContainer()),
-                    "beacon", CoerceJavaToLua.coerce(new LuaBlockBeacon()),
-                    "brewingStand", CoerceJavaToLua.coerce(new LuaBlockBrewingStand()),
-                    "chest", CoerceJavaToLua.coerce(new LuaBlockChest()),
-                    "dispenser", CoerceJavaToLua.coerce(new LuaBlockDispenser()),
-                    "dropper", CoerceJavaToLua.coerce(new LuaBlockDropper()),
-                    "furnace", CoerceJavaToLua.coerce(new LuaBlockFurnace()),
-                    "skulkerBox", CoerceJavaToLua.coerce(new LuaBlockSkull())
-            )
+            "eventRegister", CoerceJavaToLua.coerce(EVENT_REGISTER),      // 弃用, 被event替代
+            "event", CoerceJavaToLua.coerce(EVENT_REGISTER),
+            "commandRegister", CoerceJavaToLua.coerce(COMMAND_REGISTER),  // 弃用, 被command替代
+            "command", CoerceJavaToLua.coerce(COMMAND_REGISTER),
+            "task", CoerceJavaToLua.coerce(TASK_REGISTER)
     );
   }
 
@@ -65,9 +42,11 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
    */
   @Override
   public void disablePlugin(String id) {
+    EVENT_REGISTER.unregisterAll(id);
+    TASK_REGISTER.cancelAll(id);
+
     LuaValue pluginFunc = globals.get(id);
     loadedPlugins.remove(id);
-
     if (!pluginFunc.isnil()) {
       LuaValue disableFunc = pluginFunc.get(DISABLE_FUNCTION);
       if (!disableFunc.isnil()) {
@@ -75,10 +54,7 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
           disableFunc.call();
         } catch (Exception e) {
           e.printStackTrace();
-        } finally {
-          EVENT_REGISTER.unregisterAll(id);
         }
-        // TODO task
       }
       globals.set(id, LuaValue.NIL);
     }
@@ -185,12 +161,59 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
     LuaValue c = getClosure(vars);
     assert c != LuaValue.NIL;
     long time = System.currentTimeMillis();
-    if (objs.length == 1) {
+    call(c, objs);
+    time = System.currentTimeMillis() - time;
+    LuaInMinecraftBukkit.debug("called closure %s: %dms", Arrays.toString(vars), time);
+  }
+
+  private void call(LuaValue c, Object[] objs) {
+    if (objs.length == 0) {
+      c.call();
+    } else if (objs.length == 1) {
       c.call(LuaValueHelper.valueOf(objs[0]));
+    } else if (objs.length == 2) {
+      c.call(
+              LuaValueHelper.valueOf(objs[0]),
+              LuaValueHelper.valueOf(objs[1])
+      );
+    } else if (objs.length == 3) {
+      c.call(
+              LuaValueHelper.valueOf(objs[0]),
+              LuaValueHelper.valueOf(objs[1]),
+              LuaValueHelper.valueOf(objs[2])
+      );
     } else {
       c.call(LuaValueHelper.asList(objs));
     }
+  }
+
+  @Override
+  public void callClosure(String id, Object closure) {
+    long time = System.currentTimeMillis();
+    if (closure instanceof LuaValue) {
+      LuaValue value = ((LuaValue) closure);
+      if (value.isfunction()) {
+        value.call();
+      } else {
+        throw new LuaFunctionIllegalException(id, id);
+      }
+    }
     time = System.currentTimeMillis() - time;
-    LuaInMinecraftBukkit.debug("called closure %s: %dms", Arrays.toString(vars), time);
+    LuaInMinecraftBukkit.debug("called closure %s: %dms", id, time);
+  }
+
+  @Override
+  public void callClosure(String id, Object closure, Object... objs) {
+    if (closure instanceof LuaValue) {
+      LuaValue value = ((LuaValue) closure);
+      if (value.isfunction()) {
+        long time = System.currentTimeMillis();
+        call(value, objs);
+        time = System.currentTimeMillis() - time;
+        LuaInMinecraftBukkit.debug("called closure %s: %dms", id, time);
+      } else {
+        throw new LuaFunctionIllegalException(id, id);
+      }
+    }
   }
 }

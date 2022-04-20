@@ -3,6 +3,7 @@ package tk.smileyik.luainminecraftbukkit.plugin.event;
 import org.bukkit.Bukkit;
 import org.bukkit.event.*;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.plugin.LuaPlugin;
 
 import java.io.IOException;
 import java.lang.reflect.*;
@@ -34,7 +35,7 @@ public class EventRegister {
    * @param priority 优先级, 范围为[0, 5], 不再此区间内则为正常默认等级.
    */
   private void registerEvent(LuaEvent<? extends Event> listener, int priority) {
-    if (priority >= 0 && priority <= 5) {
+    if (priority >= 0 && priority <= 5 && priority != 2) {
       try {
         Method[] methods = listener.getClass().getDeclaredMethods();
         EventHandler handler = null;
@@ -59,20 +60,14 @@ public class EventRegister {
           ((Map) memberValues.get(invocationHandler)).put("priority", PRIORITIES[priority]);
           LuaInMinecraftBukkit.debug("注册事件优先级: %s; 闭包: %s", handler.priority(), listener.getId());
         }
-      } catch (NoSuchFieldException e) {
-        throw new RuntimeException(e);
-      } catch (IllegalAccessException e) {
-        throw new RuntimeException(e);
+      } catch (Exception e) {
+        // 恢复默认优先级
       }
     }
-
-
     if (!events.containsKey(listener.getPluginId())) {
       events.put(listener.getPluginId(), new ArrayList<>());
     }
     events.get(listener.getPluginId()).add(listener);
-
-
     Bukkit.getServer().getPluginManager().registerEvents(listener, LuaInMinecraftBukkit.getInstance());
   }
 
@@ -81,13 +76,14 @@ public class EventRegister {
    * @param event 要注册的事件.
    * @param id 闭包id
    * @param priority 优先级, 范围为[0, 5], 不再此区间内则为正常默认等级.
-   * @throws ClassNotFoundException 当要注册的事件不存在则抛出.
-   * @throws NoSuchMethodException 当要注册的事件不存在则抛出.
-   * @throws InvocationTargetException 当要注册的事件不存在则抛出.
-   * @throws InstantiationException 当要注册的事件不存在则抛出.
-   * @throws IllegalAccessException 当要注册的事件不存在则抛出.
    */
+  @Deprecated
   public void registerListener(String event, String id, int priority) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    register(event, id, priority);
+    LuaInMinecraftBukkit.log("eventRegister:registerListener 即将被弃用, 请使用event:register");
+  }
+
+  private Class<?> getClass(String event) throws ClassNotFoundException, NoSuchMethodException {
     String classPath;
     if (EVENT_MAPPER.containsKey(event)) {
       classPath = EVENT_MAPPER.getProperty(event);
@@ -96,10 +92,55 @@ public class EventRegister {
               ("tk.smileyik.luainminecraftbukkit.bridge.event" + event) :
               event;
     }
+    return Class.forName(classPath);
+  }
 
-    final LuaEvent<? extends Event> listener =
-            (LuaEvent<? extends Event>) Class.forName(classPath).getDeclaredConstructor(String.class).newInstance(id);
-    registerEvent(listener, priority);
+  /**
+   * 注册监听事件.
+   * @param event 要注册的事件.
+   * @param id 闭包id
+   * @param priority 优先级, 范围为[0, 5], 不再此区间内则为正常默认等级.
+   */
+  public void register(String event, String id, int priority) {
+    LuaEvent<? extends Event> listener = null;
+    try {
+      listener = (LuaEvent<? extends Event>) getClass(event)
+              .getDeclaredConstructor(String.class)
+              .newInstance(id);
+
+      registerEvent(listener, priority);
+    } catch (Exception e) {
+      LuaInMinecraftBukkit.log("注册%s事件失败! id: %s", event, id);
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 创建一个事件监听器.
+   * @param plugin   脚本插件实例.
+   * @param closure  脚本函数
+   * @param event    事件名
+   * @param priority 优先级, 范围为[0, 5], 不再此区间内则为正常默认等级.
+   */
+  public String register(LuaPlugin plugin,
+                       Object closure,
+                       String event,
+                       int priority) {
+    LuaEvent<? extends Event> listener = null;
+    try {
+      listener = (LuaEvent<? extends Event>) getClass(event)
+              .getDeclaredConstructor(String.class)
+              .newInstance(plugin.getId());
+      listener.setClosure(closure);
+      String id = String.format("%s.%s.%s", plugin.getId(), event, listener.getId());
+      listener.setId(id);
+      registerEvent(listener, priority);
+      return id;
+    } catch (Exception e) {
+      LuaInMinecraftBukkit.log("注册%s事件失败! id: %s", event, plugin.getId());
+      e.printStackTrace();
+    }
+    return null;
   }
 
   /**

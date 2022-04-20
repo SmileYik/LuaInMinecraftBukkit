@@ -10,7 +10,7 @@ public class LuaPluginHelper {
    * @param id 脚本插件id
    * @return 如果已经加载则返回true.
    */
-  public boolean isLoadPlugin(String id) {
+  public static boolean isLoadPlugin(String id) {
     return LuaInMinecraftBukkit.getPluginManager().isLoadPlugin(id);
   }
 
@@ -19,7 +19,7 @@ public class LuaPluginHelper {
    * @param id 函数路径
    * @return LuaRunnable实例
    */
-  public LuaRunnable newLuaRunnable(String id) {
+  public static LuaRunnable newLuaRunnable(String id) {
     return new LuaRunnable(id);
   }
 
@@ -29,7 +29,7 @@ public class LuaPluginHelper {
    * @param obj 带入的参数.
    * @return LuaRunnable实例
    */
-  public LuaRunnable newLuaRunnable(String id, Object obj) {
+  public static LuaRunnable newLuaRunnable(String id, Object obj) {
     return new LuaRunnable(id, obj);
   }
 
@@ -37,7 +37,7 @@ public class LuaPluginHelper {
    * 获取本插件实例对象.
    * @return 本插件的实例对象.
    */
-  public Plugin getPlugin() {
+  public static Plugin getPlugin() {
     return LuaInMinecraftBukkit.getInstance();
   }
 
@@ -47,7 +47,7 @@ public class LuaPluginHelper {
    * @return 如果类存在则返回对应的类
    * @throws ClassNotFoundException 当找不到指定路径的类则抛出.
    */
-  public Class<?> getClass(String name) throws ClassNotFoundException {
+  public static Class<?> getClass(String name) throws ClassNotFoundException {
     return Class.forName(name);
   }
 
@@ -55,7 +55,7 @@ public class LuaPluginHelper {
    * 插件是否在Native模式下运行.
    * @return 如果是在Native模式下运行则返回true.
    */
-  public boolean isNativeMode() {
+  public static boolean isNativeMode() {
     return LuaInMinecraftBukkit.getPluginManager() instanceof LuaPluginManagerOutside;
   }
 }

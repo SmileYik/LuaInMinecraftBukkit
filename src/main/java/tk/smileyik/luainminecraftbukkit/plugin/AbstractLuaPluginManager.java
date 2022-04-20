@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractLuaPluginManager implements LuaPluginManager {
-
   protected static final File PLUGIN_PATH;
 
   static {
@@ -28,8 +27,6 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
 
   protected final HashMap<String, LuaPlugin> loadedPlugins = new HashMap<>();
 
-
-
   /**
    * 重载脚本插件.
    * @param id 插件id.
@@ -42,9 +39,9 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
       LuaPlugin plugin = loadedPlugins.get(id);
       disablePlugin(id);
       loadPlugin(plugin.getPluginPath().getName());
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -104,7 +101,7 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
         continue;
       }
       if (loadFailed) {
-        LuaInMinecraftBukkit.debug(plugin.getId() + ": 没有找到插件的必要依赖.");
+        LuaInMinecraftBukkit.debug(plugin.getId() + ": 没有找到插件的必要依赖或插件加载时出错.");
         return;
       } else if (!loadPlugin(plugin)) {
         queue.add(file);
