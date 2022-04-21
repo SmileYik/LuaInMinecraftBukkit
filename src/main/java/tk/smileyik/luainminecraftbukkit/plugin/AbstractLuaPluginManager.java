@@ -2,9 +2,9 @@ package tk.smileyik.luainminecraftbukkit.plugin;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-import tk.smileyik.luainminecraftbukkit.plugin.inside.LuaPluginInside;
-import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
-import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginOutside;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.inside.LuaPluginInside;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginOutside;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +94,7 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
     while (!queue.isEmpty()) {
       File file = queue.removeFirst();
       LuaPlugin plugin;
+      // 检查lua_plugin, 并返回相应实例.
       try {
         plugin = checkPlugin(file);
       } catch (RuntimeException e) {
@@ -101,15 +102,23 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
         continue;
       }
       if (loadFailed) {
-        LuaInMinecraftBukkit.debug(plugin.getId() + ": 没有找到插件的必要依赖或插件加载时出错.");
+        LuaInMinecraftBukkit.debug(
+                plugin.getId() + ": 没有找到插件的必要依赖或插件加载时出错.");
         return;
-      } else if (!loadPlugin(plugin)) {
+      } else if (!checkDependents(plugin)) {
+        // 不存在依赖. 加入队尾等待重新加载.
         queue.add(file);
+      } else if (!loadPlugin(plugin)) {
+        // 加载失败
+        LuaInMinecraftBukkit.getInstance().getLogger().warning(String.format(
+                "插件%s加载失败!", plugin.getId()));
       } else {
         loadedPlugins.put(plugin.getId(), plugin);
       }
 
       if (--waitToLoad == 0) {
+        // 如果当前加载轮次与上一次加载轮次待加载的插件数量一样
+        // 则判断剩下的为依赖不足无法继续加载.
         if (queue.size() == lastWaitToLoad) {
           loadFailed = true;
         }

@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.plugin.util;
 
 import org.bukkit.plugin.Plugin;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
 
 public class LuaPluginHelper {
   /**

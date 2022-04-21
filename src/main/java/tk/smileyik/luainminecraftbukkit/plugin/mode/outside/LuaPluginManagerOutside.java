@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.plugin.outside;
+package tk.smileyik.luainminecraftbukkit.plugin.mode.outside;
 
 import org.keplerproject.luajava.LuaException;
 import org.keplerproject.luajava.LuaObject;
@@ -61,9 +61,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
    */
   @Override
   public boolean loadPlugin(LuaPlugin plugin) {
-    if (!checkDependents(plugin)) {
-      return false;
-    } else if (isLoadPlugin(plugin.getId())) {
+    if (isLoadPlugin(plugin.getId())) {
       return true;
     }
     LuaInMinecraftBukkit.log(

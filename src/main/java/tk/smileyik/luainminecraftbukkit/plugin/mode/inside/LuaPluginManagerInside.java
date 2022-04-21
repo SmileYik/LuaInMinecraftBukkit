@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.plugin.inside;
+package tk.smileyik.luainminecraftbukkit.plugin.mode.inside;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaFunction;
@@ -67,9 +67,7 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
    */
   @Override
   public boolean loadPlugin(LuaPlugin plugin) {
-    if (!checkDependents(plugin)) {
-      return false;
-    } else if (isLoadPlugin(plugin.getId())) {
+    if (isLoadPlugin(plugin.getId())) {
       return true;
     }
     LuaInMinecraftBukkit.log(

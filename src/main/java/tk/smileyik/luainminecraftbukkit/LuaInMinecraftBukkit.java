@@ -3,13 +3,13 @@ package tk.smileyik.luainminecraftbukkit;
 import com.google.common.io.Files;
 import tk.smileyik.luainminecraftbukkit.bridge.event.EventHelper;
 import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
-import tk.smileyik.luainminecraftbukkit.plugin.outside.LuaPluginManagerOutside;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.test.LoopTest;
 import tk.smileyik.luainminecraftbukkit.util.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import tk.smileyik.luainminecraftbukkit.plugin.inside.LuaPluginManagerInside;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.inside.LuaPluginManagerInside;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.plugin.outside;
+package tk.smileyik.luainminecraftbukkit.plugin.mode.outside;
 
 import java.io.*;
 import java.nio.file.Files;

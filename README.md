@@ -1,4 +1,4 @@
-# LuaInMinecraftBukkt
+# LuaInMinecraftBukkit
 
 用Lua来编写Minecraft Bukkit插件!
 
@@ -29,17 +29,21 @@ LuaInMinecraftBukkit是一个可以让Minecraft Bukkit服务端及其的延伸�
 
 同时, 插件提供两种lua脚本运行模式.
 
-1. 利用java自身实现lua脚本语言规范(默认模式)
-2. 使用原本的c语言去运行lua脚本(native模式)
+1. 利用java自身实现lua脚本语言规范(默认模式), 为([Lua5.2](http://www.lua.org/manual/5.2/manual.html))
+2. 使用原本的c语言去运行lua脚本(native模式), 为([Lua5.4](http://www.lua.org/manual/5.4/manual.html))
 
 第一种模式为默认模式, 它的兼容性较强
 第二种模式需要在配置文件中启用, 在运行较为繁琐复杂的脚本时, 相对比第一种模式而言第二种模式的运行速度会相对而言更快一些.
 
 ##### java原生方法运行1 + 2 + ... + 1000000000所耗费的时间:
 
+三次平均下来是26019ms也就是26秒
+
 ![java](https://blog.smileyik.tk/blogs/other/markdowns/Minecraft/LuaInMinecraftBukkit/LuaInMinecraftBukkit/cwf9hy.png)
 
 ##### 第二种模式去执行相同的方法(在服务器中运行)
+
+三次平均下来就是14292ms, 也就是14秒多一点.
 
 ![lua](https://blog.smileyik.tk/blogs/other/markdowns/Minecraft/LuaInMinecraftBukkit/LuaInMinecraftBukkit/oxgyr3.png)
 
