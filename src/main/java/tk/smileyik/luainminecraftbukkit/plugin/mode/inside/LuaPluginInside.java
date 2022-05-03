@@ -1,5 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.plugin.mode.inside;
 
+import tk.smileyik.luainminecraftbukkit.plugin.mode.hybrid.RunType;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -15,10 +17,12 @@ public class LuaPluginInside implements tk.smileyik.luainminecraftbukkit.plugin.
   private final File pluginPath;
   private final File configPath;
   private final Logger logger;
+  private final RunType runType;
 
   public LuaPluginInside(String id, String displayName, String author,
                          String version, List<String> softDependents,
-                         List<String> dependents, File pluginPath, File configPath) {
+                         List<String> dependents, File pluginPath,
+                         File configPath, RunType runType) {
     this.id = id;
     this.displayName = displayName;
     this.author = author;
@@ -28,6 +32,7 @@ public class LuaPluginInside implements tk.smileyik.luainminecraftbukkit.plugin.
     this.pluginPath = pluginPath;
     this.configPath = configPath;
     this.logger = Logger.getLogger(id);
+    this.runType = runType;
   }
 
   /**
@@ -120,5 +125,10 @@ public class LuaPluginInside implements tk.smileyik.luainminecraftbukkit.plugin.
   @Override
   public Logger getLogger() {
     return logger;
+  }
+
+  @Override
+  public RunType getRunType() {
+    return runType;
   }
 }

@@ -1,5 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.plugin;
 
+import tk.smileyik.luainminecraftbukkit.plugin.mode.hybrid.RunType;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -68,4 +70,10 @@ public interface LuaPlugin {
    * @return 返回Logger.
    */
   Logger getLogger();
+
+  /**
+   * 获取运行模式.
+   * @return 当前插件的运行模式.
+   */
+  RunType getRunType();
 }

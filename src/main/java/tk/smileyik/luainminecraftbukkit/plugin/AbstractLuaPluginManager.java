@@ -2,6 +2,7 @@ package tk.smileyik.luainminecraftbukkit.plugin;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.hybrid.RunType;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.inside.LuaPluginInside;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginOutside;
@@ -162,6 +163,7 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
     String version = config.getString("version");
     List<String> softDependents = config.getStringList("softDependents");
     List<String> dependents = config.getStringList("dependents");
+    RunType type = RunType.valueOf(config.getString("mode", "Inside"));
 
     if (id == null) {
       throw new RuntimeException("在plugin.yml配置文件中 id 不能为空! 加载路径: " + file);
@@ -180,7 +182,8 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
               softDependents,
               dependents,
               file,
-              new File(file, CONFIG_PATH)
+              new File(file, CONFIG_PATH),
+              type
       );
     } else {
       return new LuaPluginInside(
@@ -191,7 +194,8 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
               softDependents,
               dependents,
               file,
-              new File(file, CONFIG_PATH)
+              new File(file, CONFIG_PATH),
+              type
       );
     }
   }
