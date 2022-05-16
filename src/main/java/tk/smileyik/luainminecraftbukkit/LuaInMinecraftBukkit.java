@@ -3,6 +3,7 @@ package tk.smileyik.luainminecraftbukkit;
 import com.google.common.io.Files;
 import tk.smileyik.luainminecraftbukkit.bridge.event.EventHelper;
 import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.LuaVMType;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.test.LoopTest;
 import tk.smileyik.luainminecraftbukkit.util.Metrics;
@@ -19,7 +20,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
   private static LuaInMinecraftBukkit instance;
   private LuaPluginManager pluginManager;
   private boolean debug = false;
-  private boolean nativeMode = false;
+  private LuaVMType runMode = LuaVMType.Inside;
 
   /**
    * 是否需要打开Debug.
@@ -32,7 +33,15 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
       saveDefaultConfig();
     }
     reloadConfig();
-    nativeMode = getConfig().getBoolean("native-mode", false);
+
+    try {
+      runMode = LuaVMType.valueOf(
+              getConfig().getString("run-mode", "Inside"));
+    } catch (Exception e) {
+      getLogger().warning("模式配置无效, 只支持 Inside(默认模式), " +
+              "Outside(Native模式), " +"Hybrid(混合模式); 注意大小写");
+      runMode = LuaVMType.Inside;
+    }
     debug = new File(getDataFolder(), "debug").isFile();
   }
 
@@ -41,10 +50,16 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     instance = this;
     check();
     setupMetrics();
-    if (nativeMode) {
-      setupNativeMode();
-    } else {
-      setupDefaultMode();
+    switch (runMode) {
+      case Inside:
+        setupDefaultMode();
+        break;
+      case Outside:
+        setupNativeMode();
+        break;
+      case Hybrid:
+        setupHybridMode();
+        break;
     }
   }
 
@@ -53,12 +68,12 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
    * 如果Native模式加载失败则加载默认模式
    */
   public void setupNativeMode() {
-    getLogger().info("蓝色小猫想出去看看");
+    getLogger().info("正在启用Native模式.....");
     try {
       pluginManager = new LuaPluginManagerOutside();
     } catch (Exception e) {
       e.printStackTrace();
-      getLogger().warning("蓝色小猫出不去, 只能呆在里面了.");
+      getLogger().warning("Native模式不可用, 切换至默认模式.");
       setupDefaultMode();
       return;
     }
@@ -69,8 +84,21 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
    * 加载默认模式.
    */
   public void setupDefaultMode() {
-    getLogger().info("蓝色小猫乖乖的呆在里面啦.");
+    getLogger().info("正在启用默认模式......");
     pluginManager = new LuaPluginManagerInside();
+    pluginManager.loadPlugins();
+  }
+
+  public void setupHybridMode() {
+    getLogger().info("正在启用混血模式.....");
+    try {
+      pluginManager = new LuaPluginManagerOutside();
+    } catch (Exception e) {
+      e.printStackTrace();
+      getLogger().warning("Native模式不可用, 切换至默认模式.");
+      setupDefaultMode();
+      return;
+    }
     pluginManager.loadPlugins();
   }
 

@@ -23,7 +23,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
 
   public LuaPluginManagerOutside() {
     try {
-      NativeLuaLoader.initNativeLua(LuaInMinecraftBukkit.getInstance().getDataFolder());
+      NativeLuaLoader.initNativeLua(
+              LuaInMinecraftBukkit.getInstance().getDataFolder());
     } catch (IOException e) {
       throw new RuntimeException("无法使用Native模式, 切换至原生模式.", e);
     }
@@ -91,7 +92,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
 
       try {
         pluginGlobals.LloadString(new String(
-                Files.readAllBytes(new File(plugin.getPluginPath(), PLUGIN_MAIN).toPath())
+                Files.readAllBytes(
+                        new File(plugin.getPluginPath(), PLUGIN_MAIN).toPath())
         ));
       } catch (IOException e) {
         e.printStackTrace();
@@ -188,7 +190,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
       );
     }
     time = System.currentTimeMillis() - time;
-    LuaInMinecraftBukkit.debug("called closure %s: %dms", Arrays.toString(vars), time);
+    LuaInMinecraftBukkit.debug(
+            "called closure %s: %dms", Arrays.toString(vars), time);
   }
 
   /**
@@ -212,7 +215,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
       );
     }
     time = System.currentTimeMillis() - time;
-    LuaInMinecraftBukkit.debug("called closure %s: %dms", Arrays.toString(vars), time);
+    LuaInMinecraftBukkit.debug(
+            "called closure %s: %dms", Arrays.toString(vars), time);
   }
 
   @Override
