@@ -6,7 +6,6 @@ import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.plugin.LuaPlugin;
 
 import java.util.*;
-import java.util.concurrent.Callable;
 
 public class TaskRegister {
   private final BukkitScheduler scheduler;

@@ -166,11 +166,14 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
     RunType type = RunType.valueOf(config.getString("mode", "Inside"));
 
     if (id == null) {
-      throw new RuntimeException("在plugin.yml配置文件中 id 不能为空! 加载路径: " + file);
+      throw new RuntimeException(
+              "在plugin.yml配置文件中 id 不能为空! 加载路径: " + file);
     } else if (author == null) {
-      throw new RuntimeException("在plugin.yml配置文件中 author 不能为空! 加载路径: " + file);
+      throw new RuntimeException(
+              "在plugin.yml配置文件中 author 不能为空! 加载路径: " + file);
     } else if (version == null) {
-      throw new RuntimeException("在plugin.yml配置文件中 version 不能为空! 加载路径: " + file);
+      throw new RuntimeException(
+              "在plugin.yml配置文件中 version 不能为空! 加载路径: " + file);
     }
 
     if (this instanceof LuaPluginManagerOutside) {

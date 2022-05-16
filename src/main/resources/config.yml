@@ -1,1 +1,4 @@
-native-mode: false
+# Hybrid: 混合模式
+# Inside: 默认模式
+# Outside: Native模式
+run-mode: Hybrid
