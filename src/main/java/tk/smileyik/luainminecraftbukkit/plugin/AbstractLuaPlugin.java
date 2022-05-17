@@ -35,6 +35,19 @@ public abstract class AbstractLuaPlugin implements LuaPlugin {
     this.runType = runType;
   }
 
+  protected AbstractLuaPlugin(AbstractLuaPlugin luaPlugin, RunType runType) {
+    this.id = luaPlugin.id;
+    this.displayName = luaPlugin.displayName;
+    this.author = luaPlugin.author;
+    this.version = luaPlugin.version;
+    this.softDependents = luaPlugin.softDependents;
+    this.dependents = luaPlugin.dependents;
+    this.pluginPath = luaPlugin.pluginPath;
+    this.configPath = luaPlugin.configPath;
+    this.runType = runType;
+    this.logger = Logger.getLogger(id);
+  }
+
   /**
    * 获取脚本插件id.
    * @return 脚本插件的id.
@@ -119,5 +132,20 @@ public abstract class AbstractLuaPlugin implements LuaPlugin {
   @Override
   public RunType getRunType() {
     return runType;
+  }
+
+  @Override
+  public String toString() {
+    return "AbstractLuaPlugin{" +
+            "id='" + id + '\'' +
+            ", displayName='" + displayName + '\'' +
+            ", author='" + author + '\'' +
+            ", version='" + version + '\'' +
+            ", softDependents=" + softDependents +
+            ", dependents=" + dependents +
+            ", pluginPath=" + pluginPath +
+            ", configPath=" + configPath +
+            ", runType=" + runType +
+            '}';
   }
 }

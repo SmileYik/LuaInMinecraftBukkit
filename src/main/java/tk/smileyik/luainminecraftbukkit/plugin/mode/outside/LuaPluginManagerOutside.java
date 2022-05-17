@@ -22,9 +22,14 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
   private final Map<String, LuaState> globals = new HashMap<>();
 
   public LuaPluginManagerOutside() {
+    if (NativeLuaLoader.isLoaded()) {
+      return;
+    }
     try {
       NativeLuaLoader.initNativeLua(
               LuaInMinecraftBukkit.getInstance().getDataFolder());
+    } catch (UnsatisfiedLinkError e) {
+      // 已经加载时会产生此错误, 忽略.
     } catch (IOException e) {
       throw new RuntimeException("无法使用Native模式, 切换至原生模式.", e);
     }
@@ -113,7 +118,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
       }
       globals.put(plugin.getId(), pluginGlobals);
       LuaInMinecraftBukkit.log(
-              "正在启用插件: %s(%s), 作者: %s, 版本: %s",
+              "正在以Native模式启用插件: %s(%s), 作者: %s, 版本: %s",
               plugin.getDisplayName(),
               plugin.getId(),
               plugin.getAuthor(),

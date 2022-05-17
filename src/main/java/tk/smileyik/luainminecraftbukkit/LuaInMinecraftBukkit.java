@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import tk.smileyik.luainminecraftbukkit.bridge.event.EventHelper;
 import tk.smileyik.luainminecraftbukkit.plugin.LuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.LuaVMType;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.hybrid.LuaPluginManagerHybrid;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.test.LoopTest;
 import tk.smileyik.luainminecraftbukkit.util.Metrics;
@@ -90,9 +91,9 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
   }
 
   public void setupHybridMode() {
-    getLogger().info("正在启用混血模式.....");
+    getLogger().info("正在启用混合模式.....");
     try {
-      pluginManager = new LuaPluginManagerOutside();
+      pluginManager = new LuaPluginManagerHybrid();
     } catch (Exception e) {
       e.printStackTrace();
       getLogger().warning("Native模式不可用, 切换至默认模式.");

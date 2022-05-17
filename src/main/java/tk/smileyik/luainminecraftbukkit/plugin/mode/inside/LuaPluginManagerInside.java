@@ -103,7 +103,7 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
       globals.set(plugin.getId(), pluginGlobals);
       func.call();
       LuaInMinecraftBukkit.log(
-              "正在启用插件: %s(%s), 作者: %s, 版本: %s",
+              "正在以默认模式启用插件: %s(%s), 作者: %s, 版本: %s",
               plugin.getDisplayName(),
               plugin.getId(),
               plugin.getAuthor(),

@@ -53,8 +53,10 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
   public boolean loadPlugin(LuaPlugin plugin) {
     switch (plugin.getRunType()) {
       case Inside:
+        plugins.put(plugin.getId(), RunType.Inside);
         return inside.loadPlugin(plugin);
       case Outside:
+        plugins.put(plugin.getId(), RunType.Outside);
         return outside.loadPlugin(plugin);
     }
     return false;
@@ -90,8 +92,10 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
       switch (plugins.get(vars[0])) {
         case Inside:
           inside.callClosure(vars);
+          break;
         case Outside:
           outside.callClosure(vars);
+          break;
       }
     }
   }
@@ -108,8 +112,10 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
       switch (plugins.get(vars[0])) {
         case Inside:
           inside.callClosure(vars, obj);
+          break;
         case Outside:
           outside.callClosure(vars, obj);
+          break;
       }
     }
   }
@@ -126,8 +132,10 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
       switch (plugins.get(id)) {
         case Inside:
           inside.callClosure(id, closure);
+          break;
         case Outside:
           outside.callClosure(id, closure);
+          break;
       }
     }
   }
@@ -145,8 +153,10 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
       switch (plugins.get(id)) {
         case Inside:
           inside.callClosure(id, closure, obj);
+          break;
         case Outside:
           outside.callClosure(id, closure, obj);
+          break;
       }
     }
   }

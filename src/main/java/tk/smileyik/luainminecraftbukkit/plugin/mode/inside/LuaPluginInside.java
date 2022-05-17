@@ -16,6 +16,10 @@ public class LuaPluginInside extends AbstractLuaPlugin {
             softDependents, dependents, pluginPath, configPath, runType);
   }
 
+  public LuaPluginInside(AbstractLuaPlugin luaPlugin, RunType runType) {
+    super(luaPlugin, runType);
+  }
+
   @Override
   public String getRequirePath(String module) throws IOException {
     return getPluginPath().getCanonicalPath() + "/" + module;

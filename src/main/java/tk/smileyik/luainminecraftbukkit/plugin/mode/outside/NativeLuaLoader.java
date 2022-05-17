@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.util.Objects;
 
 public class NativeLuaLoader {
+  private static boolean loaded = false;
   private enum Os {
     WIN(0, "libs/win"),
     LINUX(1, "libs/linux"),
@@ -51,7 +52,9 @@ public class NativeLuaLoader {
     }
   }
 
-
+  public static boolean isLoaded() {
+    return loaded;
+  }
 
   public static void initNativeLua(File baseDir) throws IOException {
     if (Os.OTHER == OS) {
@@ -64,6 +67,7 @@ public class NativeLuaLoader {
       }
       System.load(libPath.getCanonicalPath());
     }
+    loaded = true;
   }
 
   private static void storeLib(String from, File to) throws IOException {

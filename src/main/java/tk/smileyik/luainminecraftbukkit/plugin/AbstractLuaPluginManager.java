@@ -2,10 +2,8 @@ package tk.smileyik.luainminecraftbukkit.plugin;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.plugin.mode.hybrid.LuaPluginHybrid;
 import tk.smileyik.luainminecraftbukkit.plugin.mode.hybrid.RunType;
-import tk.smileyik.luainminecraftbukkit.plugin.mode.inside.LuaPluginInside;
-import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginManagerOutside;
-import tk.smileyik.luainminecraftbukkit.plugin.mode.outside.LuaPluginOutside;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,6 +96,10 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
       // 检查lua_plugin, 并返回相应实例.
       try {
         plugin = checkPlugin(file);
+        // 返回的元数据为null时, 代表插件未被启用.
+        if (plugin == null) {
+          continue;
+        }
       } catch (RuntimeException e) {
         e.printStackTrace();
         continue;
@@ -150,6 +152,9 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
    * @throws RuntimeException 如果指定路径是一个不合法的脚本插件路径则抛出.
    */
   private LuaPlugin checkPlugin(File file) throws RuntimeException {
+    if (file.isDirectory() && file.getName().endsWith(".disable")) {
+      return null;
+    }
     File configFile = new File(file, PLUGIN_META);
     if (!configFile.exists()) {
       throw new RuntimeException("不是一个正常插件! 加载路径: " + file);
@@ -176,31 +181,11 @@ public abstract class AbstractLuaPluginManager implements LuaPluginManager {
               "在plugin.yml配置文件中 version 不能为空! 加载路径: " + file);
     }
 
-    if (this instanceof LuaPluginManagerOutside) {
-      return new LuaPluginOutside(
-              id,
-              displayName,
-              author,
-              version,
-              softDependents,
-              dependents,
-              file,
-              new File(file, CONFIG_PATH),
-              type
-      );
-    } else {
-      return new LuaPluginInside(
-              id,
-              displayName,
-              author,
-              version,
-              softDependents,
-              dependents,
-              file,
-              new File(file, CONFIG_PATH),
-              type
-      );
-    }
+    return new LuaPluginHybrid(
+            id, displayName, author, version,
+            softDependents, dependents, file,
+            new File(file, CONFIG_PATH), type
+    );
   }
 
   /**
