@@ -18,6 +18,12 @@ public class TaskRegister {
     scheduler = plugin.getServer().getScheduler();
   }
 
+  /**
+   * 在服务器下一刻运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTask(LuaPlugin luaPlugin, String functionId) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -26,6 +32,13 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 在服务器下一刻运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTask(LuaPlugin luaPlugin, String functionId, Object obj) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -34,6 +47,12 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 在服务器下一刻运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTask(LuaPlugin luaPlugin, Object function) {
     if (function instanceof String) {
       return runTask(luaPlugin, (String) function);
@@ -44,6 +63,13 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 在服务器下一刻运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTask(LuaPlugin luaPlugin, Object function, Object obj) {
     if (function instanceof String) {
       return runTask(luaPlugin, (String) function, obj);
@@ -54,6 +80,12 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskAsync(LuaPlugin luaPlugin, String functionId) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -62,6 +94,13 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskAsync(LuaPlugin luaPlugin, String functionId, Object obj) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -70,6 +109,12 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskAsync(LuaPlugin luaPlugin, Object function) {
     if (function instanceof String) {
       return runTaskAsync(luaPlugin, (String) function);
@@ -80,6 +125,13 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskAsync(LuaPlugin luaPlugin, Object function, Object obj) {
     if (function instanceof String) {
       return runTaskAsync(luaPlugin, (String) function, obj);
@@ -90,6 +142,13 @@ public class TaskRegister {
     });
   }
 
+  /**
+   * 延迟运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLater(LuaPlugin luaPlugin, String functionId, int delay) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -98,6 +157,14 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLater(LuaPlugin luaPlugin, String functionId, int delay, Object obj) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -106,6 +173,13 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLater(LuaPlugin luaPlugin, Object function, int delay) {
     if (function instanceof String) {
       return runTaskLater(luaPlugin, (String) function, delay);
@@ -116,6 +190,14 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLater(LuaPlugin luaPlugin, Object function, int delay, Object obj) {
     if (function instanceof String) {
       return runTaskLater(luaPlugin, (String) function, delay, obj);
@@ -126,6 +208,13 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLaterAsync(LuaPlugin luaPlugin, String functionId, int delay) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -134,6 +223,14 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLaterAsync(LuaPlugin luaPlugin, String functionId, int delay, Object obj) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -142,6 +239,13 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLaterAsync(LuaPlugin luaPlugin, Object function, int delay) {
     if (function instanceof String) {
       return runTaskLaterAsync(luaPlugin, (String) function, delay);
@@ -152,6 +256,14 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 延迟运行一个异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTaskLaterAsync(LuaPlugin luaPlugin, Object function, int delay, Object obj) {
     if (function instanceof String) {
       return runTaskLaterAsync(luaPlugin, (String) function, delay, obj);
@@ -162,6 +274,14 @@ public class TaskRegister {
     }, delay);
   }
 
+  /**
+   * 运行一个重复运行的任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimer(LuaPlugin luaPlugin, String functionId, int delay, int period) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -172,6 +292,15 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimer(LuaPlugin luaPlugin, String functionId, int delay, int period, Object obj) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -182,6 +311,14 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimer(LuaPlugin luaPlugin, Object function, int delay, int period) {
     if (function instanceof String) {
       return runTimer(luaPlugin, (String) function, delay, period);
@@ -194,6 +331,15 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimer(LuaPlugin luaPlugin, Object function, int delay, int period, Object obj) {
     if (function instanceof String) {
       return runTimer(luaPlugin, (String) function, delay, period, obj);
@@ -206,6 +352,14 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimerAsync(LuaPlugin luaPlugin, String functionId, int delay, int period) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -216,6 +370,15 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param functionId 函数id.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimerAsync(LuaPlugin luaPlugin, String functionId, int delay, int period, Object obj) {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
@@ -226,6 +389,14 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimerAsync(LuaPlugin luaPlugin, Object function, int delay, int period) {
     if (function instanceof String) {
       return runTimerAsync(luaPlugin, (String) function, delay, period);
@@ -238,6 +409,15 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 运行一个重复运行的异步任务.
+   * @param luaPlugin  脚本插件实例.
+   * @param function   脚本函数.
+   * @param delay      延迟刻数.
+   * @param period     重复间隔刻数.
+   * @param obj        运行时要给函数传入的参数.
+   * @return 一个包含任务id的BukkitTask.
+   */
   public BukkitTask runTimerAsync(LuaPlugin luaPlugin, Object function, int delay, int period, Object obj) {
     if (function instanceof String) {
       return runTimerAsync(luaPlugin, (String) function, delay, period, obj);
@@ -250,11 +430,19 @@ public class TaskRegister {
     return task;
   }
 
+  /**
+   * 通过BukkitTask的id去取消一个任务.
+   * @param id BukkitTask中的id.
+   */
   public void cancel(int id) {
     scheduler.cancelTask(id);
     timers.values().forEach(it -> it.remove(id));
   }
 
+  /**
+   * 取消一个脚本插件中的所有的任务.
+   * @param plugin 脚本插件实例.
+   */
   public void cancelAll(LuaPlugin plugin) {
     cancelAll(plugin.getId());
   }

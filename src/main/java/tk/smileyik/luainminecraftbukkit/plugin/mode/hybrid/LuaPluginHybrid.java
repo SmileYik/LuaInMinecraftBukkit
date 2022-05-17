@@ -25,7 +25,6 @@ public class LuaPluginHybrid extends AbstractLuaPlugin {
    *
    * @param module 模块名称
    * @return 返回脚本插件require所认可的模块路径.
-   * @throws IOException
    */
   @Override
   public String getRequirePath(String module) throws IOException {

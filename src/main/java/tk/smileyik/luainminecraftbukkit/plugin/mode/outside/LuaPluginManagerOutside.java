@@ -163,7 +163,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
     if (g == null) {
       throw new LuaPluginNotFountException(vars[0]);
     }
-    LuaObject obj = null;
+    LuaObject obj;
     try {
       obj = g.getLuaObject(vars[1]);
       for (int i = 2; i < vars.length; ++i) {

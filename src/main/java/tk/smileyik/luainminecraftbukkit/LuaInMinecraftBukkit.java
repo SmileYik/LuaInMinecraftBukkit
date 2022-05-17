@@ -110,7 +110,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     try {
       Metrics metrics = new Metrics(this, 14952);
     } catch (Exception e) {
-
+      // 注册bstats失败, 但不影响插件正常功能, 忽略报错结果
     }
   }
 
@@ -153,9 +153,8 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
         }
       } else if (args.length == 3) {
         if (args[0].equalsIgnoreCase("testLoop")) {
-          getServer().getScheduler().runTaskAsynchronously(this, () -> {
-            LoopTest.doLoop(sender, args[2], args[1]);
-          });
+          getServer().getScheduler().runTaskAsynchronously(this, () ->
+                  LoopTest.doLoop(sender, args[2], args[1]));
           return true;
         }
       }
@@ -174,6 +173,12 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     return super.onCommand(sender, command, label, args);
   }
 
+  /**
+   * 此方法不会在正常运行中启用.
+   * @param str 要写入的内容
+   * @param fileName 要写入的文件
+   */
+  @Deprecated
   public static void writeToFile(String str, String fileName) {
     File file = new File(instance.getDataFolder(), fileName);
     file.getParentFile().mkdirs();

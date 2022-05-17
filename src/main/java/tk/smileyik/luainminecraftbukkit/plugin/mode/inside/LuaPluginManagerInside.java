@@ -91,7 +91,7 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
       }
       pluginGlobals.set("self", LuaValueHelper.valueOf(plugin));
       // 环境生成完毕
-      LuaValue func = null;
+      LuaValue func;
       try {
         func = pluginGlobals.loadfile(
                 new File(plugin.getPluginPath(), PLUGIN_MAIN).getCanonicalPath()
