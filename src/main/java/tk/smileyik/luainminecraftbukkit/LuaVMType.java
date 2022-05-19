@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.luaplugin.mode;
+package tk.smileyik.luainminecraftbukkit;
 
 public enum LuaVMType {
   /**

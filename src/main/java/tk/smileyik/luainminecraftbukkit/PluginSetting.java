@@ -1,6 +1,5 @@
 package tk.smileyik.luainminecraftbukkit;
 
-import tk.smileyik.luainminecraftbukkit.luaplugin.mode.LuaVMType;
 import tk.smileyik.luainminecraftbukkit.luaplugin.util.NativeLuaLoader;
 
 import java.io.IOException;

@@ -1,5 +1,6 @@
 package tk.smileyik.luainminecraftbukkit.luaconfig;
 
+import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.util.LuaValueUtil;
 import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentInside;
 import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilder;

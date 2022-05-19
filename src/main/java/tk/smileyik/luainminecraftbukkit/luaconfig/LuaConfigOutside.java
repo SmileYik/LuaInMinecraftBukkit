@@ -1,6 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.luaconfig;
 
 import org.keplerproject.luajava.LuaException;
+import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
 import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilder;
 

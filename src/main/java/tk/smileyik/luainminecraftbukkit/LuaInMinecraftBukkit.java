@@ -4,7 +4,7 @@ import com.google.common.io.Files;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfig;
+import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.bridge.event.EventHelper;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.hybrid.LuaPluginManagerHybrid;

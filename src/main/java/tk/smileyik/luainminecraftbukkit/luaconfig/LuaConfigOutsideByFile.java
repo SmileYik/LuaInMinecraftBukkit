@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 public class LuaConfigOutsideByFile extends LuaConfigOutside {
   private final Path path;
-  protected LuaConfigOutsideByFile(Path path) {
+  public LuaConfigOutsideByFile(Path path) {
     this.path = path;
   }
 

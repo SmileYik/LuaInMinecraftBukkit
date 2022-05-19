@@ -1,6 +1,10 @@
-package tk.smileyik.luainminecraftbukkit.luaconfig;
+package tk.smileyik.luainminecraftbukkit.api.luaconfig;
 
 import org.keplerproject.luajava.LuaException;
+import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfigInsideByFile;
+import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfigInsideByScript;
+import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfigOutsideByFile;
+import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfigOutsideByScript;
 import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilder;
 
 import java.io.IOException;

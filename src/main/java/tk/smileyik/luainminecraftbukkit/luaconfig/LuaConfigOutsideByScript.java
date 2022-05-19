@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class LuaConfigOutsideByScript extends LuaConfigOutside {
   private final String script;
-  protected LuaConfigOutsideByScript(String script) {
+  public LuaConfigOutsideByScript(String script) {
     this.script = script;
   }
 
