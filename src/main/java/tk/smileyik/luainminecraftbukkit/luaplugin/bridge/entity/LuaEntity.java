@@ -1,6 +1,8 @@
 package tk.smileyik.luainminecraftbukkit.luaplugin.bridge.entity;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;

@@ -13,7 +13,7 @@ import tk.smileyik.luainminecraftbukkit.util.LuaValueHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
 
 public class LuaPluginManagerInside extends AbstractLuaPluginManager {
 
@@ -80,7 +80,9 @@ public class LuaPluginManagerInside extends AbstractLuaPluginManager {
     try {
       // 生成环境
       Globals pluginGlobals =
-              LuaInMinecraftBukkit.isDebug() ? JsePlatform.debugGlobals() : JsePlatform.standardGlobals();
+              LuaInMinecraftBukkit.isDebug() ?
+                      JsePlatform.debugGlobals() :
+                      JsePlatform.standardGlobals();
       pluginGlobals.set("luaBukkit", LUA_BUKKIT);
       for (String dependent : plugin.getDependents()) {
         pluginGlobals.set(dependent, globals.get(dependent));

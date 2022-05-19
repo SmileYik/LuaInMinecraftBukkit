@@ -5,18 +5,22 @@ import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
-import tk.smileyik.luainminecraftbukkit.luaplugin.*;
+import tk.smileyik.luainminecraftbukkit.luaplugin.AbstractLuaPluginManager;
+import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionIllegalException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionNotFountException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionRuntimeException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaPluginNotFountException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.util.LuaPluginHelper;
-import tk.smileyik.luainminecraftbukkit.util.LuaTableBuilder;
+import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
+import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilder;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
   private final Map<String, LuaState> globals = new HashMap<>();
@@ -140,7 +144,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
   }
 
   public void setLuaBukkit(LuaState luaState) {
-    new LuaTableBuilder(luaState)
+    LuaTableBuilder.getBuilder(new LuaEnvironmentOutside(luaState))
             .put("pluginHelper", LuaPluginHelper.class) // 将被删除, 被helper替代
             .put("helper", LuaPluginHelper.class)
             .put("server", LuaInMinecraftBukkit.getInstance().getServer())

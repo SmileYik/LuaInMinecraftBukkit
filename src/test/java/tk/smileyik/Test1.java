@@ -7,6 +7,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Map;
 
 public class Test1 {
 
@@ -14,12 +15,16 @@ public class Test1 {
     String script = Test1.class.getResource("/hello.lua").getFile();
     Globals globals = JsePlatform.standardGlobals();
     LuaValue chunk = globals.loadfile(script);
-    chunk.call(LuaValue.valueOf(script));
-    Connection con;
+    LuaValue call = chunk.call(LuaValue.valueOf(script));
+
   }
 
   public static void hello(String hello) {
     System.out.println("Hello, " + hello);
+  }
+
+  public static void hello2(Map<Object, Object> obj) {
+    System.out.println(obj);
   }
 
   public void hello() {

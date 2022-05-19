@@ -1,17 +1,17 @@
 package tk.smileyik.luainminecraftbukkit;
 
 import com.google.common.io.Files;
-import tk.smileyik.luainminecraftbukkit.luaplugin.bridge.event.EventHelper;
-import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPluginManager;
-import tk.smileyik.luainminecraftbukkit.luaplugin.mode.LuaVMType;
-import tk.smileyik.luainminecraftbukkit.luaplugin.mode.hybrid.LuaPluginManagerHybrid;
-import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.LuaPluginManagerOutside;
-import tk.smileyik.luainminecraftbukkit.test.LoopTest;
-import tk.smileyik.luainminecraftbukkit.util.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPluginManager;
+import tk.smileyik.luainminecraftbukkit.luaplugin.bridge.event.EventHelper;
+import tk.smileyik.luainminecraftbukkit.luaplugin.mode.LuaVMType;
+import tk.smileyik.luainminecraftbukkit.luaplugin.mode.hybrid.LuaPluginManagerHybrid;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.inside.LuaPluginManagerInside;
+import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.LuaPluginManagerOutside;
+import tk.smileyik.luainminecraftbukkit.test.LoopTest;
+import tk.smileyik.luainminecraftbukkit.util.Metrics;
 
 import java.io.File;
 import java.io.IOException;

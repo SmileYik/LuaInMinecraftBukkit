@@ -5,7 +5,10 @@ import org.bukkit.scheduler.BukkitTask;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class TaskRegister {
   private final BukkitScheduler scheduler;

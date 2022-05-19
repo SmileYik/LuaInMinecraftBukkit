@@ -1,6 +1,9 @@
 package tk.smileyik.luainminecraftbukkit.util;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
@@ -16,6 +19,11 @@ import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 import java.util.*;
 
+/**
+ * <p>将obj值格式化为Lua中的Table值.</p>
+ * <p>也将Lua中的值转化为Java中的对象</p>
+ */
+@Deprecated
 public class LuaValueHelper {
   public interface LuaValueCastFunction <T, V> {
     V cast(T t);

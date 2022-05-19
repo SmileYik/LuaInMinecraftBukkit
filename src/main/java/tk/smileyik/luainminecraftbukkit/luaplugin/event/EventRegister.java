@@ -1,12 +1,18 @@
 package tk.smileyik.luainminecraftbukkit.luaplugin.event;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
 
 import java.io.IOException;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.*;
 
 public class EventRegister {
