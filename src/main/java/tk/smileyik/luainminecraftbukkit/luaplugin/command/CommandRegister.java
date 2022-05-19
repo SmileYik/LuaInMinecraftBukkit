@@ -28,7 +28,8 @@ public class CommandRegister {
    * @param label 指令.
    * @param args 指令.
    */
-  public void dispatch(CommandSender sender, Command command, String label, String[] args) {
+  public void dispatch(CommandSender sender,
+                       Command command, String label, String[] args) {
     if (args.length >= 1) {
       label = args[0];
       if (commandMapper.containsKey(label)) {

@@ -27,7 +27,8 @@ public abstract class LuaEvent <T extends Event> implements Listener {
   public void event(T e) {
     try {
       if (closure != null) {
-        LuaInMinecraftBukkit.getPluginManager().callClosure(vars[0], closure, e);
+        LuaInMinecraftBukkit.getPluginManager()
+                .callClosure(vars[0], closure, e);
       } else {
         LuaInMinecraftBukkit.getPluginManager().callClosure(vars, e);
       }

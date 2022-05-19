@@ -3,7 +3,8 @@ plugins {
 }
 
 group 'tk.smileyik'
-version '1.4'
+version '1.5'
+archivesBaseName = 'LuaInMinecraftBukkit'
 
 repositories {
     maven {
@@ -31,9 +32,20 @@ test {
     useJUnitPlatform()
 }
 
+// 删除plugins文件夹中以前构建的文件.
+task deleteOldBuilds(type: Delete) {
+    for (final def f in file("${projectDir}/server/plugins/").listFiles()) {
+        if (f.isFile() && f.getName().startsWith("${archivesBaseName}")) {
+            printf("Remove old build: %s\n", f.toString())
+            delete f
+        }
+    }
+}
+
+// 复制当前版本到plugins文件夹中
 task copyTask(type: Copy) {
     dependsOn(build)
-    from "${buildDir}/libs/LuaInMinecraftBukkit-1.4.jar"
-    println "${projectDir}/server/plugins/LuaInMinecraftBukkit-1.4.jar"
+    dependsOn(deleteOldBuilds)
+    from "${buildDir}/libs/${archivesBaseName}-${version}.jar"
     into "${projectDir}/server/plugins/"
 }

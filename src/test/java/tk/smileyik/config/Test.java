@@ -2,7 +2,7 @@ package tk.smileyik.config;
 
 import org.keplerproject.luajava.LuaException;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
-import tk.smileyik.luainminecraftbukkit.luaplugin.util.NativeLuaLoader;
+import tk.smileyik.luainminecraftbukkit.util.NativeLuaLoader;
 
 import java.io.File;
 import java.io.IOException;

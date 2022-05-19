@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.luaplugin.util;
+package tk.smileyik.luainminecraftbukkit.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -81,9 +81,13 @@ public class NativeLuaLoader {
   }
 
   private static void storeLib(String from, File to) throws IOException {
-    try (BufferedInputStream bis =
-                 new BufferedInputStream(Objects.requireNonNull(NativeLuaLoader.class.getResourceAsStream(from)));
-         BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(to.toPath()))) {
+    try (
+            BufferedInputStream bis =
+                 new BufferedInputStream(Objects.requireNonNull(
+                         NativeLuaLoader.class.getResourceAsStream(from)));
+            BufferedOutputStream bos =
+                    new BufferedOutputStream(
+                         Files.newOutputStream(to.toPath()))) {
       byte[] bytes = new byte[8192];
       int len;
       while ((len = bis.read(bytes)) != -1) {
