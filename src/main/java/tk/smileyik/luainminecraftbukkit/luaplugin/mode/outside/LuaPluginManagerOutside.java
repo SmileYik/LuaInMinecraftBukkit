@@ -5,6 +5,7 @@ import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.PluginSetting;
 import tk.smileyik.luainminecraftbukkit.luaplugin.AbstractLuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionIllegalException;
@@ -26,16 +27,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
   private final Map<String, LuaState> globals = new HashMap<>();
 
   public LuaPluginManagerOutside() {
-    if (NativeLuaLoader.isLoaded()) {
-      return;
-    }
-    try {
-      NativeLuaLoader.initNativeLua(
-              LuaInMinecraftBukkit.getInstance().getDataFolder());
-    } catch (UnsatisfiedLinkError e) {
-      // 已经加载时会产生此错误, 忽略.
-    } catch (IOException e) {
-      throw new RuntimeException("无法使用Native模式, 切换至原生模式.", e);
+    if (!PluginSetting.isAllowNative()) {
+      throw new RuntimeException("无法使用Native模式.");
     }
   }
 

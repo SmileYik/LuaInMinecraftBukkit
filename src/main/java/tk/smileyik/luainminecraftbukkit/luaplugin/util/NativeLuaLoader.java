@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside;
+package tk.smileyik.luainminecraftbukkit.luaplugin.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.util.Objects;
 
 public class NativeLuaLoader {
-  private static boolean loaded = false;
   private enum Os {
     WIN(0, "libs/win"),
     LINUX(1, "libs/linux"),
@@ -55,10 +54,11 @@ public class NativeLuaLoader {
     }
   }
 
-  public static boolean isLoaded() {
-    return loaded;
-  }
-
+  /**
+   * 加载动态链接库.
+   * @param baseDir 动态链接库所在的(将要被放置的)文件夹.
+   * @throws IOException 如果加载出来有问题的话.
+   */
   public static void initNativeLua(File baseDir) throws IOException {
     if (Os.OTHER == OS) {
       throw new RuntimeException("Native lua 模式不适于当前系统.");
@@ -69,8 +69,15 @@ public class NativeLuaLoader {
         storeLib("/" + OS.getInnerPath() + "/" + fileName, libPath);
       }
       System.load(libPath.getCanonicalPath());
+      /*
+       * 对于已经加载过一次的服务器, 在服务器中输入 reload 指令
+       * 其会导致已经加载的插件的类加载器与新加载的同个插件的类加
+       * 载器不同. 因为安全关系, JVM并不会允许跨类加载器调用其中
+       * 已经加载的动态链接库. 所以对于要使用Native模式的服务器,
+       * 尽量不要使用 reload 指令去重新加载插件, 应该重启服务器
+       * 来达到重新加载插件的目的.
+       */
     }
-    loaded = true;
   }
 
   private static void storeLib(String from, File to) throws IOException {

@@ -2,7 +2,7 @@ package tk.smileyik.config;
 
 import org.keplerproject.luajava.LuaException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfig;
-import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.NativeLuaLoader;
+import tk.smileyik.luainminecraftbukkit.luaplugin.util.NativeLuaLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +11,7 @@ import java.nio.file.Paths;
 public class Test {
 
 
-  String script =
-          "entity:setaString('a')\n" +
-          "entity:setAnInt(10)\n" +
-          "entity:setInts(helper:toIntArray({1, 2, 3, 4, 5}))\n" +
-          "entity:setEntities(helper:toArray(entity, {entity, entity}))";
+  String script = "entity:setAnInt(10)\n";
 
   static {
     try {

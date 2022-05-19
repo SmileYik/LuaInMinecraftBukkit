@@ -4,14 +4,15 @@ import com.google.common.io.Files;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.smileyik.luainminecraftbukkit.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.bridge.event.EventHelper;
-import tk.smileyik.luainminecraftbukkit.luaplugin.mode.LuaVMType;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.hybrid.LuaPluginManagerHybrid;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.inside.LuaPluginManagerInside;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.test.LoopTest;
 import tk.smileyik.luainminecraftbukkit.util.Metrics;
+import tk.smileyik.luainminecraftbukkit.util.ResourceToFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +21,7 @@ import java.nio.charset.StandardCharsets;
 public class LuaInMinecraftBukkit extends JavaPlugin {
   private static LuaInMinecraftBukkit instance;
   private LuaPluginManager pluginManager;
-  private boolean debug = false;
-  private LuaVMType runMode = LuaVMType.Inside;
+  private PluginSetting setting;
 
   /**
    * 是否需要打开Debug.
@@ -30,20 +30,21 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     if (!getDataFolder().exists()) {
       getDataFolder().mkdirs();
     }
-    if (!new File(getDataFolder(), "config.yml").exists()) {
-      saveDefaultConfig();
+    File file = new File(getDataFolder(), "config.lua");
+    if (!file.exists()) {
+      ResourceToFile.saveResourceToFile(
+              "/config.lua", file
+      );
     }
-    reloadConfig();
-
+    // 创建默认配置, 并加载配置.
+    setting = new PluginSetting();
     try {
-      runMode = LuaVMType.valueOf(
-              getConfig().getString("run-mode", "Inside"));
+      LuaConfig.loadInsideLuaConfig(file.toPath())
+               .addGlobal("setting", setting)
+               .config();
     } catch (Exception e) {
-      getLogger().warning("模式配置无效, 只支持 Inside(默认模式), " +
-              "Outside(Native模式), " +"Hybrid(混合模式); 注意大小写");
-      runMode = LuaVMType.Inside;
+      throw new RuntimeException(e);
     }
-    debug = new File(getDataFolder(), "debug").isFile();
   }
 
   @Override
@@ -51,7 +52,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     instance = this;
     check();
     setupMetrics();
-    switch (runMode) {
+    switch (setting.getVmType()) {
       case Inside:
         setupDefaultMode();
         break;
@@ -73,7 +74,6 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     try {
       pluginManager = new LuaPluginManagerOutside();
     } catch (Exception e) {
-      e.printStackTrace();
       getLogger().warning("Native模式不可用, 切换至默认模式.");
       setupDefaultMode();
       return;
@@ -90,12 +90,14 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     pluginManager.loadPlugins();
   }
 
+  /**
+   * 加载混合模式.
+   */
   public void setupHybridMode() {
     getLogger().info("正在启用混合模式.....");
     try {
       pluginManager = new LuaPluginManagerHybrid();
     } catch (Exception e) {
-      e.printStackTrace();
       getLogger().warning("Native模式不可用, 切换至默认模式.");
       setupDefaultMode();
       return;
@@ -117,6 +119,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
   @Override
   public void onDisable() {
     pluginManager.disableAllPlugins();
+
   }
 
   @Override
@@ -199,7 +202,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
    * @param obj 参数
    */
   public static void debug(String message, Object ... obj) {
-    if (instance.debug) {
+    if (isDebug()) {
       instance.getLogger().info(String.format(message, obj));
     }
   }
@@ -218,6 +221,6 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
   }
 
   public static boolean isDebug() {
-    return instance.debug;
+    return instance.setting.isDebug();
   }
 }
