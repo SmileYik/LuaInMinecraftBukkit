@@ -3,3 +3,7 @@
 /build/
 /build/classes/java/main/
 /build/classes/java/test/
+/src/main/resources/com/
+/src/main/resources/org/
+/src/main/resources/*.class
+/server/

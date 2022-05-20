@@ -22,6 +22,5 @@ public class LuaConfigOutsideByScript extends LuaConfigOutside {
       throw new RuntimeException("加载脚本失败." +
               getEnvironment().toString(-1));
     }
-    getEnvironment().close();
   }
 }

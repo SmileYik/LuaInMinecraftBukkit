@@ -1,6 +1,6 @@
 package tk.smileyik.luainminecraftbukkit.util;
 
-import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.*;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 public class LuaValueUtil {
@@ -28,6 +28,22 @@ public class LuaValueUtil {
       return LuaValue.valueOf((byte[]) obj);
     } else {
       return CoerceJavaToLua.coerce(obj);
+    }
+  }
+
+  public static Object toJavaValue(Object obj) {
+    if (obj == null || obj instanceof LuaNil) {
+      return null;
+    } else if (obj instanceof LuaInteger) {
+      return ((LuaValue) obj).toint();
+    } else if (obj instanceof LuaDouble) {
+      return ((LuaValue) obj).todouble();
+    } else if (obj instanceof LuaBoolean) {
+      return ((LuaValue) obj).toboolean();
+    } else if (obj instanceof LuaFunction) {
+      return obj;
+    } else {
+      return obj.toString();
     }
   }
 }
