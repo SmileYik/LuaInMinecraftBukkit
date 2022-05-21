@@ -30,7 +30,7 @@ public class PluginSetting {
     } catch (IllegalArgumentException e) {
       LuaInMinecraftBukkit.getInstance().getLogger()
               .warning("模式配置无效, 只支持 Inside(默认模式), " +
-              "Outside(Native模式), " +"Hybrid(混合模式); 注意大小写");
+              "Outside(Native模式), " + "Hybrid(混合模式); 注意大小写");
       vmType = LuaVMType.Inside;
     }
   }
