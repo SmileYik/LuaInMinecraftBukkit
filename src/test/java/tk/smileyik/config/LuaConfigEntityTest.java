@@ -56,7 +56,10 @@ public class LuaConfigEntityTest {
             "           end",
             "  end",
             ")",
-            "test.e = 'aaa'"
+            "test.e = 'aaa'",
+            "test.f = function (d)",
+            "           return d ^ 0.5",
+            "         end"
     );
   }
 
@@ -74,6 +77,7 @@ public class LuaConfigEntityTest {
     System.out.println(testEntity.callC());
     System.out.println(testEntity.callD(3.14));
     System.out.println(testEntity.e);
+    System.out.println(testEntity.callF(2));
   }
 
   @Test
@@ -90,6 +94,7 @@ public class LuaConfigEntityTest {
     System.out.println(testEntity.callC());
     System.out.println(testEntity.callD(3.14));
     System.out.println(testEntity.e);
+    System.out.println(testEntity.callF(2));
   }
 }
 
@@ -108,6 +113,8 @@ class TestEntity implements LuaConfigEntity {
 
   public String e;
 
+  public Object f;
+
   public boolean callA() {
     return config.callClosureReturnBoolean(a);
   }
@@ -123,6 +130,10 @@ class TestEntity implements LuaConfigEntity {
   public double callD(double d) {
     Object temp = config.callClosureReturnClosure(this.d, d);
     return config.callClosureReturnNumber(temp).doubleValue();
+  }
+
+  public double callF(double d) {
+    return config.callClosureReturnNumber(this.f, d).doubleValue();
   }
 
   int calculate(int level) {
