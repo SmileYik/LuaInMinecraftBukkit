@@ -6,7 +6,7 @@ LuaInMinecraftBukkit是一个可以让Minecraft Bukkit服务端及其的延伸�
 
 ### 快速开始文档
 
-[快速开始文档](https://blog.smileyik.tk/?blog=other&album=MinecraftPost&post=LuaInMinecraftBukkit-quickStart)
+[快速开始文档]([https://blog.smileyik.tk/?blog=other&album=MinecraftPost&post=LuaInMinecraftBukkit-quickStart](https://github.com/SmileYik/LuaInMinecraftBukkt/wiki))
 
 ### 什么是lua?
 
