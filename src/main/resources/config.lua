@@ -12,3 +12,9 @@ setting:debug(false)
 -- Inside: 默认模式
 -- Outside: Native模式
 setting:run_mode("Hybrid")
+
+-- 选择Outside模式运行的lua版本
+-- lua_5_4: lua5.4版本
+-- luajit_2_1_0_beta3: luajit2.1.0_beta3版本
+-- 在Inside模式中无效
+setting:native_version("lua5.4")

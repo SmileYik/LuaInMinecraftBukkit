@@ -2,20 +2,21 @@ package tk.smileyik.config;
 
 import org.keplerproject.luajava.LuaException;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
-import tk.smileyik.luainminecraftbukkit.util.NativeLuaLoader;
+import tk.smileyik.luainminecraftbukkit.util.nativeloader.NativeLuaLoader;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class Test {
+public class LuaConfigTest {
 
 
   String script = "entity:setAnInt(10)\n";
 
   static {
     try {
-      NativeLuaLoader.initNativeLua(new File("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/src/test/resources"));
+      NativeLuaLoader.initNativeLua(new File("/home/miskyle/workspace/idea" +
+              "-space/LuaInMinecraftBukkt/src/test/resources"), null);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.keplerproject.luajava.LuaException;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfigEntity;
-import tk.smileyik.luainminecraftbukkit.util.NativeLuaLoader;
+import tk.smileyik.luainminecraftbukkit.util.nativeloader.NativeLuaLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,8 @@ public class LuaConfigEntityTest {
 
   static {
     try {
-      NativeLuaLoader.initNativeLua(new File("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/src/test/resources"));
+      NativeLuaLoader.initNativeLua(new File("/home/miskyle/workspace/idea" +
+              "-space/LuaInMinecraftBukkt/src/test/resources"), null);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

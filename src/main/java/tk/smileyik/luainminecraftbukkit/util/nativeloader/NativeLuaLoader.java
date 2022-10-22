@@ -1,4 +1,6 @@
-package tk.smileyik.luainminecraftbukkit.util;
+package tk.smileyik.luainminecraftbukkit.util.nativeloader;
+
+import tk.smileyik.luajava.MyLuaState;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -9,8 +11,8 @@ import java.util.Objects;
 
 public class NativeLuaLoader {
   private enum Os {
-    WIN(0, "libs/win"),
-    LINUX(1, "libs/linux"),
+    WIN(0, "win"),
+    LINUX(1, "linux"),
     OTHER(2, "");
 
     private final int index;
@@ -59,14 +61,17 @@ public class NativeLuaLoader {
    * @param baseDir 动态链接库所在的(将要被放置的)文件夹.
    * @throws IOException 如果加载出来有问题的话.
    */
-  public static void initNativeLua(File baseDir) throws IOException {
+  public static void initNativeLua(File baseDir, NativeVersion version) throws IOException {
     if (Os.OTHER == OS) {
       throw new RuntimeException("Native lua 模式不适于当前系统.");
     }
     for (String fileName : LIB_LOAD_ORDER[OS.getIndex()]) {
       File libPath = new File(baseDir, fileName);
       if (!libPath.exists()) {
-        storeLib("/" + OS.getInnerPath() + "/" + fileName, libPath);
+        storeLib(
+                "/libs/" + version.getDir() + "/" + OS.getInnerPath() + "/" + fileName,
+                libPath
+        );
       }
       System.load(libPath.getCanonicalPath());
       /*
@@ -77,6 +82,13 @@ public class NativeLuaLoader {
        * 尽量不要使用 reload 指令去重新加载插件, 应该重启服务器
        * 来达到重新加载插件的目的.
        */
+    }
+    MyLuaState.initMyLuaState();
+  }
+
+  public static void deleteLibs(File baseDir) {
+    for (String fileName : LIB_LOAD_ORDER[OS.getIndex()]) {
+      new File(baseDir, fileName).delete();
     }
   }
 

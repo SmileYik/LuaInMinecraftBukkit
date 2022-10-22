@@ -42,6 +42,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
       LuaConfig.loadInsideLuaConfig(file.toPath())
                .addGlobal("setting", setting)
                .config();
+      setting.loadNativeLib();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
