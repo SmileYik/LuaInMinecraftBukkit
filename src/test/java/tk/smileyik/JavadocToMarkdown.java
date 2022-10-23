@@ -32,8 +32,8 @@ public class JavadocToMarkdown {
 
 
   public static void main(String[] args) throws IOException {
-    String outName = "api/LuaConfigEntity.md";
-    String file = "/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/src/main/java/tk/smileyik/luainminecraftbukkit/api/luaconfig/LuaConfigEntity.java";
+    String outName = "api/LuaTableBuilder.md";
+    String file = "/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/src/main/java/tk/smileyik/luainminecraftbukkit/util/luatablebuilder/LuaTableBuilder.java";
     List<String> strings = Files.readAllLines(Paths.get(file));
 
     List<String> aPart = new ArrayList<>();
