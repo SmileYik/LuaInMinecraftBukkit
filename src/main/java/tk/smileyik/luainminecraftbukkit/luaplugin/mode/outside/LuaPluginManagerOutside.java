@@ -90,6 +90,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
       }
       pluginGlobals.pushObjectValue(plugin);
       pluginGlobals.setGlobal("self");
+      setLuaRequireSearchPath(pluginGlobals, plugin);
       // 环境生成完毕
 
       try {
@@ -134,6 +135,28 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
       return false;
     }
     return true;
+  }
+
+  private void setLuaRequireSearchPath(LuaState luaState, LuaPlugin luaPlugin) throws LuaException, IOException {
+    File reallyCPath = new File(luaPlugin.getPluginPath(), "c_libraries");
+    File reallyLuaPath = new File(luaPlugin.getPluginPath(), "lua_libraries");
+
+    // create path
+    boolean flag =
+            (!reallyLuaPath.exists() || !reallyCPath.exists()) &&
+                    reallyLuaPath.mkdirs() && reallyCPath.mkdirs();
+    // 添加依赖搜索路径
+    LuaObject luaObject = luaState.getLuaObject("package");
+    String cpath = luaObject.getField("cpath").getString();
+    String path = luaObject.getField("path").getString();
+    luaState.getGlobal("package");
+    luaState.pushString(
+            cpath + ";" + reallyCPath.toPath().toRealPath() + "/?.so");
+    luaState.setField(-2, "cpath");
+    luaState.pushString(
+            path + ";" + reallyLuaPath.toPath().toRealPath() + "/?.lua");
+    luaState.setField(-2, "path");
+    luaState.pop(1);
   }
 
   public void setLuaBukkit(LuaState luaState) {
