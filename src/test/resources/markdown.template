@@ -1,0 +1,9 @@
+### ${method_name}
++ **Description**: ${comment}
++ **Return Type**: **${return_type}**
++ **Return Desc**: ${return_des}
++ **Usage**: `${method_name}(${p:p_t,})`
+
+|Name|Type|Description|
+|-|-|-|
+${|p|pt|pd|}

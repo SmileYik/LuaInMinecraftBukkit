@@ -18,7 +18,6 @@ public interface LuaPlugin {
    * 获取脚本插件的显示名称.
    * @return 脚本插件的显示名称
    */
-
   String getDisplayName();
 
   /**
