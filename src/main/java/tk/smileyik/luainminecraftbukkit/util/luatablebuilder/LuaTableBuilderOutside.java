@@ -8,7 +8,7 @@ import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutsid
 public class LuaTableBuilderOutside extends AbstractLuaTableBuilder<LuaObject> {
   private final LuaEnvironmentOutside luaEnvironment;
 
-  protected LuaTableBuilderOutside(LuaEnvironmentOutside luaEnvironment) {
+  public LuaTableBuilderOutside(LuaEnvironmentOutside luaEnvironment) {
     this.luaEnvironment = luaEnvironment;
   }
 

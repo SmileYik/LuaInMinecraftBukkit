@@ -4,11 +4,11 @@ import org.keplerproject.luajava.LuaException;
 import org.keplerproject.luajava.LuaObject;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfigEntity;
+import tk.smileyik.luainminecraftbukkit.api.luatablebuilder.LuaTableBuilder;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigClosedException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigClosureReturnException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigNotClosureException;
 import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
-import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilder;
 
 import java.text.NumberFormat;
 import java.text.ParseException;

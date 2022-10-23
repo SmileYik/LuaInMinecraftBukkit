@@ -7,7 +7,7 @@ import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentInside
 public class LuaTableBuilderInside extends AbstractLuaTableBuilder<LuaValue> {
   private final LuaEnvironmentInside luaEnvironment;
 
-  protected LuaTableBuilderInside(LuaEnvironmentInside luaEnvironment) {
+  public LuaTableBuilderInside(LuaEnvironmentInside luaEnvironment) {
     this.luaEnvironment = luaEnvironment;
   }
 

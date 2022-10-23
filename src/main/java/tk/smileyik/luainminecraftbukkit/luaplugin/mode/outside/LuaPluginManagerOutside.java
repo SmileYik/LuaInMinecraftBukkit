@@ -6,6 +6,7 @@ import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.PluginSetting;
+import tk.smileyik.luainminecraftbukkit.api.luatablebuilder.LuaTableBuilder;
 import tk.smileyik.luainminecraftbukkit.luaplugin.AbstractLuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionIllegalException;
@@ -14,7 +15,6 @@ import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionRuntimeEx
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaPluginNotFountException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.util.LuaPluginHelper;
 import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
-import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilder;
 
 import java.io.File;
 import java.io.IOException;
