@@ -126,6 +126,7 @@ public final class LuaJavaAPI {
           ret = method.invoke(obj, objs);
         }
       } catch (Exception e) {
+        e.printStackTrace();
         throw new LuaException(e);
       }
 
@@ -605,6 +606,7 @@ public final class LuaJavaAPI {
               m.getParameterCount() != size) {
         continue;
       }
+
       boolean okMethod = true;
       Class<?>[] parameters = m.getParameterTypes();
       for (int i = 0; i < size; ++i) {

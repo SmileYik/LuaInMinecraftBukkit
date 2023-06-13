@@ -32,8 +32,8 @@ public class JavadocToMarkdown {
 
 
   public static void main(String[] args) throws IOException {
-    String outName = "api/LuaTableBuilder.md";
-    String file = "/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/src/main/java/tk/smileyik/luainminecraftbukkit/util/luatablebuilder/LuaTableBuilder.java";
+    String outName = "LuaPluginHelper.md";
+    String file = "/run/media/smileyik/H/Workspace/Idea-space/LuaInMinecraftBukkt/src/main/java/tk/smileyik/luainminecraftbukkit/luaplugin/util/LuaPluginHelper.java";
     List<String> strings = Files.readAllLines(Paths.get(file));
 
     List<String> aPart = new ArrayList<>();
@@ -60,8 +60,7 @@ public class JavadocToMarkdown {
       }
     }
 
-    File f = new File("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt" +
-            "/docs/", outName);
+    File f = new File("/run/media/smileyik/H/Workspace/Idea-space/LuaInMinecraftBukkt/docs", outName);
     if (!f.getParentFile().exists()) {
       f.getParentFile().mkdirs();
     }
@@ -140,8 +139,7 @@ public class JavadocToMarkdown {
 
   static {
     try {
-      template = new String(Files.readAllBytes(Paths.get("/home/miskyle/workspace/idea" +
-              "-space/LuaInMinecraftBukkt/src/test/resources/markdown.template")));
+      template = new String(Files.readAllBytes(Paths.get("/run/media/smileyik/H/Workspace/Idea-space/LuaInMinecraftBukkt/src/test/resources/markdown.template")));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

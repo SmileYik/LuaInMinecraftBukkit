@@ -4,6 +4,7 @@ import org.keplerproject.luajava.LuaException;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import tk.smileyik.luainminecraftbukkit.util.nativeloader.NativeLuaLoader;
+import tk.smileyik.luainminecraftbukkit.util.nativeloader.NativeVersion;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class NativeTest1 {
 
   public static void main(String[] args) throws IOException, LuaException {
     NativeLuaLoader.initNativeLua(new File("/home/miskyle/workspace/idea" +
-            "-space/LuaInMinecraftBukkt/src/test/resources"), null);
+            "-space/LuaInMinecraftBukkt/src/test/resources"), NativeVersion.LUA_5_4);
     LuaState luaState = LuaStateFactory.newLuaState();
     luaState.openLibs();
     luaState.LloadFile("/home/miskyle/workspace/idea-space/LuaInMinecraftBukkt/src/test/resources/native_test1.lua");

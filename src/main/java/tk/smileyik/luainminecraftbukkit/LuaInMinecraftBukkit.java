@@ -1,6 +1,5 @@
 package tk.smileyik.luainminecraftbukkit;
 
-import com.google.common.io.Files;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +16,8 @@ import tk.smileyik.luainminecraftbukkit.util.ResourceToFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 
 public class LuaInMinecraftBukkit extends JavaPlugin {
   private static LuaInMinecraftBukkit instance;
@@ -187,7 +188,7 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
     File file = new File(instance.getDataFolder(), fileName);
     file.getParentFile().mkdirs();
     try {
-      Files.write(str.getBytes(StandardCharsets.UTF_8), file);
+      Files.write(file.toPath(), str.getBytes(StandardCharsets.UTF_8), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
