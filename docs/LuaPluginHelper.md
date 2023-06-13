@@ -63,7 +63,7 @@
 + **Description**:  以插件身份发送一个HTTP请求.
 + **Return Type**: **void**
 + **Return Desc**: 
-+ **Usage**: `httpAction(plugin:LuaPlugin, urlString:String, method:String, body:byte[], connectTimeout:int, readTimeout:int, instanceFollowRedirects:boolean, Map<String:, header:String>, useCaches:boolean, callback:Object, errorCallback:Object)`
++ **Usage**: `httpAction(plugin:LuaPlugin, urlString:String, method:String, body:byte[], connectTimeout:int, readTimeout:int, instanceFollowRedirects:boolean, header:Map<String,String>, useCaches:boolean, callback:Object, errorCallback:Object)`
 
 |Name|Type|Description|
 |-|-|-|
@@ -74,8 +74,7 @@
 |connectTimeout|**int**|连接等待时间(毫秒).|
 |readTimeout|**int**|读取等待时间(毫秒).|
 |instanceFollowRedirects|**boolean**|是否跟随重定向.|
-|Map<String|****|null|
-|header|**String>**|需要添加的请求头，为null则代表不需要添加.|
+|header|**Map<String, String>**|需要添加的请求头，为null则代表不需要添加.|
 |useCaches|**boolean**|是否使用缓存.|
 |callback|**Object**|一个Lua函数闭包，会将ResponseCode以及HTTP请求的文本结果作为字符串传递给闭包.|
 |errorCallback|**Object**|一个Lua函数闭包，其只在运行过程中出现错误时调用，会将Exception实例传给闭包.|
@@ -83,7 +82,7 @@
 + **Description**:  以插件身份发送一个HTTP请求.
 + **Return Type**: **void**
 + **Return Desc**: 
-+ **Usage**: `httpAction(plugin:LuaPlugin, urlString:String, method:String, body:String, bodyEncode:String, connectTimeout:int, readTimeout:int, instanceFollowRedirects:boolean, Map<String:, header:String>, useCaches:boolean, callback:Object, errorCallback:Object)`
++ **Usage**: `httpAction(plugin:LuaPlugin, urlString:String, method:String, body:String, bodyEncode:String, connectTimeout:int, readTimeout:int, instanceFollowRedirects:boolean, header:Map<String,String>, useCaches:boolean, callback:Object, errorCallback:Object)`
 
 |Name|Type|Description|
 |-|-|-|
@@ -95,8 +94,7 @@
 |connectTimeout|**int**|连接等待时间(毫秒).|
 |readTimeout|**int**|读取等待时间(毫秒).|
 |instanceFollowRedirects|**boolean**|是否跟随重定向.|
-|Map<String|****|null|
-|header|**String>**|需要添加的请求头，为null则代表不需要添加.|
+|header|**Map<String, String>**|需要添加的请求头，为null则代表不需要添加.|
 |useCaches|**boolean**|是否使用缓存.|
 |callback|**Object**|一个Lua函数闭包，会将ResponseCode以及HTTP请求的文本结果作为字符串传递给闭包.|
 |errorCallback|**Object**|一个Lua函数闭包，其只在运行过程中出现错误时调用，会将Exception实例传给闭包.|
@@ -104,7 +102,7 @@
 + **Description**:  以插件身份发送一个HTTP的GET请求.
 + **Return Type**: **void**
 + **Return Desc**: 
-+ **Usage**: `httpGet(plugin:LuaPlugin, urlString:String, connectTimeout:int, readTimeout:int, instanceFollowRedirects:boolean, Map<String:, header:String>, useCaches:boolean, callback:Object, errorCallback:Object)`
++ **Usage**: `httpGet(plugin:LuaPlugin, urlString:String, connectTimeout:int, readTimeout:int, instanceFollowRedirects:boolean, header:Map<String,String>, useCaches:boolean, callback:Object, errorCallback:Object)`
 
 |Name|Type|Description|
 |-|-|-|
@@ -113,8 +111,7 @@
 |connectTimeout|**int**|连接等待时间(毫秒).|
 |readTimeout|**int**|读取等待时间(毫秒).|
 |instanceFollowRedirects|**boolean**|是否跟随重定向.|
-|Map<String|****|null|
-|header|**String>**|需要添加的请求头，为null则代表不需要添加.|
+|header|**Map<String, String>**|需要添加的请求头，为null则代表不需要添加.|
 |useCaches|**boolean**|是否使用缓存.|
 |callback|**Object**|一个Lua函数闭包，会将ResponseCode以及HTTP请求的文本结果作为字符串传递给闭包.|
 |errorCallback|**Object**|一个Lua函数闭包，其只在运行过程中出现错误时调用，会将Exception实例传给闭包.|

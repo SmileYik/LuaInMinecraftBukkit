@@ -120,7 +120,7 @@
 |table|**LuaTable**|表（数组）|
 ### toStringStringMap
 + **Description**:  将Lua中的只包含字符串的数组（下标为数字且未显式指定数字下标的Table）（如{"a", "b"}而非{2 = "b"}）转换为Java中的Map类型.
-+ **Return Type**: **String>**
++ **Return Type**: **Map<String, String>**
 + **Return Desc**: Map<String, String>类型HashMap.
 + **Usage**: `toStringStringMap(table:LuaObject)`
 
@@ -129,7 +129,7 @@
 |table|**LuaObject**|Lua中的表|
 ### toStringStringMap
 + **Description**:  将Lua中的只包含字符串的数组（下标为数字且未显式指定数字下标的Table）（如{"a", "b"}而非{2 = "b"}）转换为Java中的Map类型.
-+ **Return Type**: **String>**
++ **Return Type**: **Map<String, String>**
 + **Return Desc**: Map<String, String>类型HashMap.
 + **Usage**: `toStringStringMap(table:LuaTable)`
 
@@ -138,7 +138,7 @@
 |table|**LuaTable**|Lua中的表|
 ### toObjectObjectMap
 + **Description**:  将Lua中的数组（下标为数字且未显式指定数字下标的Table）（如{"a", "b"}而非{2 = "b"}）转换为Java中的Map类型.
-+ **Return Type**: **Object>**
++ **Return Type**: **Map<Object, Object>**
 + **Return Desc**: Map<Object, Object>类型HashMap.
 + **Usage**: `toObjectObjectMap(table:LuaObject)`
 
@@ -147,7 +147,7 @@
 |table|**LuaObject**|Lua中的表|
 ### toObjectObjectMap
 + **Description**:  将Lua中的数组（下标为数字且未显式指定数字下标的Table）（如{"a", "b"}而非{2 = "b"}）转换为Java中的Map类型.
-+ **Return Type**: **Object>**
++ **Return Type**: **Map<Object, Object>**
 + **Return Desc**: Map<Object, Object>类型HashMap.
 + **Usage**: `toObjectObjectMap(table:LuaTable)`
 
