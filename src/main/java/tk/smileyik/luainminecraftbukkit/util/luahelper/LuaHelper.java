@@ -208,7 +208,20 @@ public class LuaHelper {
         int size = l.objLen(-1);
         Object[] ans = new Object[size];
         for (int i = 0; i < size; ++i) {
-            ans[i] = l.getLuaObject(table, i + 1).getObject();
+            LuaObject luaObject = l.getLuaObject(table, i + 1);
+            Object obj = null;
+            if (luaObject.isJavaFunction() || luaObject.isJavaObject() || luaObject.isUserdata()) {
+                obj = luaObject.getObject();
+            } else if (luaObject.isBoolean()) {
+                obj = luaObject.getBoolean();
+            } else if (luaObject.isNumber()) {
+                obj = luaObject.getNumber();
+            } else if (luaObject.isString()) {
+                obj = luaObject.getString();
+            } else if (luaObject.isTable()) {
+                obj = toObjectArray(luaObject);
+            }
+            ans[i] = obj;
         }
         return ans;
     }

@@ -1,11 +1,13 @@
 plugins {
     id 'java'
-    id "de.jjohannes.extra-java-module-info" version "0.1"
+    //id "de.jjohannes.extra-java-module-info" version "0.1"
 }
 
 group 'tk.smileyik'
 version '1.7.2'
 archivesBaseName = 'LuaInMinecraftBukkit'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     maven {
@@ -28,18 +30,18 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
-extraJavaModuleInfo {
-    // This does not have to be a complete description (e.g. here 'org.apache.commons.collections' does not export anything here).
-    // It only needs to be good enough to work in the context of this application we are building.
-    module('luaj-jse-3.0.1.jar','org.luaj','3.0.1') {
-        exports "org.luaj.vm2"
-        exports "org.luaj.vm2.lib.jse"
-    }
-    automaticModule("commons-lang-2.6.jar", "org.apache.commons.lang")
-    automaticModule("bungeecord-chat-1.16-R0.3.jar", "bungeecord-chat")
-    automaticModule("guava-21.0.jar", "guava")
-    automaticModule("gson-2.8.0.jar", "gson")
-}
+//extraJavaModuleInfo {
+//    // This does not have to be a complete description (e.g. here 'org.apache.commons.collections' does not export anything here).
+//    // It only needs to be good enough to work in the context of this application we are building.
+//    module('luaj-jse-3.0.1.jar','org.luaj','3.0.1') {
+//        exports "org.luaj.vm2"
+//        exports "org.luaj.vm2.lib.jse"
+//    }
+//    automaticModule("commons-lang-2.6.jar", "org.apache.commons.lang")
+//    automaticModule("bungeecord-chat-1.16-R0.3.jar", "bungeecord-chat")
+//    automaticModule("guava-21.0.jar", "guava")
+//    automaticModule("gson-2.8.0.jar", "gson")
+//}
 
 test {
     useJUnitPlatform()
@@ -55,15 +57,10 @@ task deleteOldBuilds(type: Delete) {
     }
 }
 
-// 复制当前版本到plugins文件夹中
+// 复制当前版本到plugins文件夹中z
 task copyTask(type: Copy) {
     dependsOn(build)
     dependsOn(deleteOldBuilds)
     from "${buildDir}/libs/${archivesBaseName}-${version}.jar"
     into "${projectDir}/server/plugins/"
-}
-
-compileJava {
-    options.compilerArgs << "--add-exports=java.base/sun.net.www.protocol.https=ALL-UNNAMED"
-    options.compilerArgs << "--add-exports=java.base/sun.net.www.protocol.http=ALL-UNNAMED"
 }

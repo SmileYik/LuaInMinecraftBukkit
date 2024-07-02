@@ -151,7 +151,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
     String path = luaObject.getField("path").getString();
     luaState.getGlobal("package");
     luaState.pushString(
-            cpath + ";" + reallyCPath.toPath().toRealPath() + "/?.so");
+            cpath + ";" + reallyCPath.toPath().toRealPath() + "/?.so" +
+                    ";" + reallyCPath.toPath().toRealPath() + "/?.dll");
     luaState.setField(-2, "cpath");
     luaState.pushString(
             path + ";" + reallyLuaPath.toPath().toRealPath() + "/?.lua");

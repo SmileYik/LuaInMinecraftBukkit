@@ -15,14 +15,14 @@ public class LuaConfigTest {
 
   static {
     try {
-      NativeLuaLoader.initNativeLua(new File("/home/miskyle/workspace/idea" +
+      NativeLuaLoader.initNativeLua(new File("/home/smileyik/workspace/idea" +
               "-space/LuaInMinecraftBukkt/src/test/resources"), null);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  // @org.junit.jupiter.api.Test
+  @org.junit.jupiter.api.Test
   void scriptInsideTest() throws LuaException, IOException {
     LuaConfig config = LuaConfig.loadInsideLuaConfig(script);
     Entity entity = new Entity();
@@ -33,7 +33,7 @@ public class LuaConfigTest {
     System.out.println(entity);
   }
 
-  // @org.junit.jupiter.api.Test
+  @org.junit.jupiter.api.Test
   void scriptOutsideTest() throws LuaException, IOException {
     LuaConfig config = LuaConfig.loadOutsideLuaConfig(script);
     Entity entity = new Entity();
@@ -44,9 +44,9 @@ public class LuaConfigTest {
     System.out.println(entity);
   }
 
-  // @org.junit.jupiter.api.Test
+  @org.junit.jupiter.api.Test
   void fileScriptInsideTest() throws LuaException, IOException {
-    LuaConfig config = LuaConfig.loadInsideLuaConfig(Paths.get("/home/miskyle" +
+    LuaConfig config = LuaConfig.loadInsideLuaConfig(Paths.get("/home/smileyik" +
             "/workspace/idea-space/LuaInMinecraftBukkt/src/test/resources/lua_config_inside_test.lua"));
     Entity entity = new Entity();
     System.out.println(entity);
@@ -56,10 +56,10 @@ public class LuaConfigTest {
     System.out.println(entity);
   }
 
-  // @org.junit.jupiter.api.Test
+  @org.junit.jupiter.api.Test
   void fileScriptOutsideTest() throws LuaException, IOException {
     LuaConfig config = LuaConfig.loadOutsideLuaConfig(Paths.get("/home" +
-            "/miskyle" +
+            "/smileyik" +
             "/workspace/idea-space/LuaInMinecraftBukkt/src/test/resources" +
             "/lua_config_outside_test.lua"));
     Entity entity = new Entity();

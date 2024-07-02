@@ -24,8 +24,15 @@
 
 package org.keplerproject.luajava;
 
+import tk.smileyik.luainminecraftbukkit.util.luahelper.LuaHelper;
+import tk.smileyik.luainminecraftbukkit.util.nativeloader.NativeLuaLoader;
+import tk.smileyik.luainminecraftbukkit.util.nativeloader.NativeVersion;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * Simple LuaJava console.
@@ -36,13 +43,28 @@ import java.io.InputStreamReader;
  */
 public class Console {
 
+  public static class A extends LuaHelper {
+    public static void print(Object obj) {
+      System.out.println(obj);
+    }
+
+    public static void print(Object[] obj) {
+      System.out.println(Arrays.toString(obj));
+    }
+  }
+
   /**
    * Creates a console for user interaction.
    *
    * @param args names of the lua files to be executed
    */
   public static void main(String[] args) {
+
     try {
+      NativeLuaLoader.initNativeLua(
+              new File("/run/media/smileyik/H/Workspace/Idea-space/LuaInMinecraftBukkt/src/test/resources/"),
+              NativeVersion.LUA_5_4
+      );
       LuaState L = LuaStateFactory.newLuaState();
       L.openLibs();
 
@@ -67,6 +89,8 @@ public class Console {
       String line;
 
       System.out.print("> ");
+      L.pushJavaObject(A.class);
+      L.setGlobal("A");
       while ((line = inp.readLine()) != null && !line.equals("exit")) {
         int ret = L.LloadBuffer(line.getBytes(), "from console");
         if (ret == 0) {

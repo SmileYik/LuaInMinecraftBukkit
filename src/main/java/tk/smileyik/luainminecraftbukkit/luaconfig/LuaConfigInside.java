@@ -1,14 +1,18 @@
 package tk.smileyik.luainminecraftbukkit.luaconfig;
 
 import org.luaj.vm2.LuaClosure;
+import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfigEntity;
 import tk.smileyik.luainminecraftbukkit.api.luatablebuilder.LuaTableBuilder;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigClosureReturnException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigNotClosureException;
+import tk.smileyik.luainminecraftbukkit.util.LuaValueHelper;
 import tk.smileyik.luainminecraftbukkit.util.LuaValueUtil;
 import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentInside;
+import tk.smileyik.luainminecraftbukkit.util.luahelper.LuaHelper;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -42,10 +46,7 @@ public abstract class LuaConfigInside
     } else if (value.isuserdata()) {
       return value.touserdata();
     }
-    throw new LuaConfigClosureReturnException(
-            "尝试将一个非java对象的闭包返回结果当作java对象返回: " +
-            value
-    );
+    return value;
   }
 
   @Override
@@ -118,13 +119,20 @@ public abstract class LuaConfigInside
                   LuaValueUtil.toLuaValue(objs[1])
           );
           break;
-        default:
+        case 3:
           ret = closure.call(
                   LuaValueUtil.toLuaValue(objs[0]),
                   LuaValueUtil.toLuaValue(objs[1]),
-                  LuaValueUtil.toLuaValue(objs[3])
+                  LuaValueUtil.toLuaValue(objs[2])
           );
           break;
+        default:
+          LuaValue[] values = new LuaValue[objs.length];
+          for (int i = 0; i < values.length; ++i) {
+            values[i] = LuaValueUtil.toLuaValue(objs[i]);
+          }
+          LuaTable luaTable = LuaValue.listOf(values);
+          ret = closure.call(luaTable);
       }
       if (ret == null || ret.isnil()) {
         return null;
