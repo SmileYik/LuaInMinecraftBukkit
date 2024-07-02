@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'tk.smileyik'
-version '1.7.2'
+version '1.7.3'
 archivesBaseName = 'LuaInMinecraftBukkit'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
