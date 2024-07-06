@@ -101,7 +101,7 @@ public interface LuaConfig {
    * @return 如果闭包返回为nil, 则此方法返回null.
    *         如果此闭包运行后返回的字符串结果.
    */
-  String callClosureReturnString(Object closureObj, Object ... objs);
+  String callClosureReturnString(Object closureObj, Object ... objs) throws LuaException;
 
   /**
    * 运行一个Lua闭包对象并且返回为java对象.
@@ -120,7 +120,7 @@ public interface LuaConfig {
    * @return 如果闭包返回为nil, 则此方法返回null.
    *         如果此闭包运行后返回的java对象结果.
    */
-  Object callClosureReturnObject(Object closureObj, Object ... objs);
+  Object callClosureReturnObject(Object closureObj, Object ... objs) throws LuaException;
 
   /**
    * 运行一个Lua闭包对象. 并且返回一个Number实例.
@@ -137,7 +137,7 @@ public interface LuaConfig {
    * @return 如果闭包返回为nil, 则此方法返回null.
    *         如果此闭包运行后返回的数字结果.
    */
-  Number callClosureReturnNumber(Object closureObj, Object ... objs);
+  Number callClosureReturnNumber(Object closureObj, Object ... objs) throws LuaException;
 
   /**
    * 运行一个Lua闭包对象. 并且返回一个布尔值.
@@ -154,7 +154,7 @@ public interface LuaConfig {
    * @return 如果闭包返回为nil, 则此方法返回false.
    *         如果此闭包运行后返回的布尔值结果.
    */
-  boolean callClosureReturnBoolean(Object closureObj, Object ... objs);
+  boolean callClosureReturnBoolean(Object closureObj, Object ... objs) throws LuaException;
 
   /**
    * 运行一个Lua闭包对象. 并且返回一个闭包.
@@ -171,5 +171,5 @@ public interface LuaConfig {
    * @return 如果闭包返回为nil, 则此方法返回null.
    *         如果此闭包运行后返回的闭包结果.
    */
-  Object callClosureReturnClosure(Object closureObj, Object ... objs);
+  Object callClosureReturnClosure(Object closureObj, Object ... objs) throws LuaException;
 }

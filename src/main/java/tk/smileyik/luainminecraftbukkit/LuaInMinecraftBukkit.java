@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.bridge.event.EventHelper;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.hybrid.LuaPluginManagerHybrid;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.inside.LuaPluginManagerInside;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.LuaPluginManagerOutside;
@@ -172,8 +173,12 @@ public class LuaInMinecraftBukkit extends JavaPlugin {
       });
       return true;
     } else if (label.equalsIgnoreCase("luap")) {
-      LuaPluginManager.getCommandRegister().dispatch(sender, command, label, args);
-      return true;
+        try {
+            LuaPluginManager.getCommandRegister().dispatch(sender, command, label, args);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
     return super.onCommand(sender, command, label, args);
   }

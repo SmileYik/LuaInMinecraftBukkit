@@ -2,7 +2,7 @@ package tk.smileyik.luainminecraftbukkit.util.luatablebuilder;
 
 import org.luaj.vm2.LuaValue;
 import tk.smileyik.luainminecraftbukkit.util.LuaValueUtil;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentInside;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentInside;
 
 public class LuaTableBuilderInside extends AbstractLuaTableBuilder<LuaValue> {
   private final LuaEnvironmentInside luaEnvironment;

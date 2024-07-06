@@ -9,12 +9,12 @@ import tk.smileyik.luainminecraftbukkit.PluginSetting;
 import tk.smileyik.luainminecraftbukkit.api.luatablebuilder.LuaTableBuilder;
 import tk.smileyik.luainminecraftbukkit.luaplugin.AbstractLuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionIllegalException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionNotFountException;
-import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionRuntimeException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaPluginNotFountException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.util.LuaPluginHelper;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentOutside;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,10 +44,9 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
       callClosure(new String[]{
               id, DISABLE_FUNCTION
       });
-    } catch (LuaFunctionNotFountException |
-             LuaPluginNotFountException |
-             LuaFunctionIllegalException e) {
-      // 如果onDisable方法未找到或此插件未被加载, 则忽略
+    } catch (LuaFunctionNotFountException | LuaPluginNotFountException | LuaFunctionIllegalException |
+             LuaFunctionException e) {
+      e.printStackTrace();
     } finally {
       LuaState luaState = globals.remove(id);
       if (luaState != null) {
@@ -201,7 +200,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
    * @param vars 闭包路径(本来是以点分隔)
    */
   @Override
-  public void callClosure(String[] vars) {
+  public void callClosure(String[] vars) throws LuaFunctionException {
     LuaObject c = getClosure(vars);
     if (!c.isFunction()) {
       throw new LuaFunctionIllegalException(vars[0], Arrays.toString(vars));
@@ -210,8 +209,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
     try {
       c.call(new Object[]{});
     } catch (LuaException e) {
-      throw new LuaFunctionRuntimeException(
-              vars[0], Arrays.toString(vars),
+      throw new LuaFunctionException(
+              e, vars[0], Arrays.toString(vars),
               c.getLuaState().toString(-1)
       );
     }
@@ -226,7 +225,7 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
    * @param objs 要传入的参数.
    */
   @Override
-  public void callClosure(String[] vars, Object ... objs) {
+  public void callClosure(String[] vars, Object ... objs) throws LuaFunctionException {
     LuaObject c = getClosure(vars);
     if (!c.isFunction()) {
       throw new LuaFunctionIllegalException(vars[0], Arrays.toString(vars));
@@ -235,8 +234,8 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
     try {
       c.call(objs);
     } catch (LuaException e) {
-      throw new LuaFunctionRuntimeException(
-              vars[0], Arrays.toString(vars),
+      throw new LuaFunctionException(
+              e, vars[0], Arrays.toString(vars),
               c.getLuaState().toString(-1)
       );
     }
@@ -246,14 +245,14 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
   }
 
   @Override
-  public void callClosure(String id, Object closure) {
+  public void callClosure(String id, Object closure) throws LuaFunctionException {
     LuaObject luaObject = (LuaObject) closure;
     long time = System.currentTimeMillis();
     try {
       luaObject.call(new Object[0]);
     } catch (LuaException e) {
-      throw new LuaFunctionRuntimeException(
-              id, id,
+      throw new LuaFunctionException(
+              e, id, id,
               luaObject.getLuaState().toString(-1)
       );
     }
@@ -262,14 +261,14 @@ public class LuaPluginManagerOutside extends AbstractLuaPluginManager {
   }
 
   @Override
-  public void callClosure(String id, Object closure, Object... objs) {
+  public void callClosure(String id, Object closure, Object... objs) throws LuaFunctionException {
     LuaObject luaObject = (LuaObject) closure;
     long time = System.currentTimeMillis();
     try {
       luaObject.call(objs);
     } catch (LuaException e) {
-      throw new LuaFunctionRuntimeException(
-              id, id,
+      throw new LuaFunctionException(
+              e, id, id,
               luaObject.getLuaState().toString(-1)
       );
     }

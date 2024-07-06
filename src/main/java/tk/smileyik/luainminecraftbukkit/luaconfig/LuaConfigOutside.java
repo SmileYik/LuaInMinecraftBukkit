@@ -8,7 +8,7 @@ import tk.smileyik.luainminecraftbukkit.api.luatablebuilder.LuaTableBuilder;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigClosedException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigClosureReturnException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigNotClosureException;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentOutside;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -37,17 +37,17 @@ public abstract class LuaConfigOutside
   }
 
   @Override
-  public Object callClosureReturnObject(Object closureObj, Object... objs) {
+  public Object callClosureReturnObject(Object closureObj, Object... objs) throws LuaException {
     return callClosure(closureObj, objs);
   }
 
   @Override
-  public String callClosureReturnString(Object closureObj, Object... objs) {
+  public String callClosureReturnString(Object closureObj, Object... objs) throws LuaException {
     return callClosure(closureObj, objs).toString();
   }
 
   @Override
-  public Number callClosureReturnNumber(Object closureObj, Object... objs) {
+  public Number callClosureReturnNumber(Object closureObj, Object... objs) throws LuaException {
     String value = callClosureReturnString(closureObj, objs);
     if (value == null) {
       return null;
@@ -63,7 +63,7 @@ public abstract class LuaConfigOutside
   }
 
   @Override
-  public boolean callClosureReturnBoolean(Object closureObj, Object... objs) {
+  public boolean callClosureReturnBoolean(Object closureObj, Object... objs) throws LuaException {
     Object obj = callClosure(closureObj, objs);
     if (obj == null) {
       return false;
@@ -72,11 +72,11 @@ public abstract class LuaConfigOutside
   }
 
   @Override
-  public Object callClosureReturnClosure(Object closureObj, Object... objs) {
+  public Object callClosureReturnClosure(Object closureObj, Object... objs) throws LuaException {
     return callClosure(closureObj, objs);
   }
 
-  public Object callClosure(Object closureObj, Object... objs) {
+  public Object callClosure(Object closureObj, Object... objs) throws LuaException {
     if (close) {
       throw new LuaConfigClosedException();
     } else if (closureObj instanceof LuaObject) {
@@ -85,11 +85,7 @@ public abstract class LuaConfigOutside
         throw new LuaConfigNotClosureException();
       }
       Object[] returns;
-      try {
-        returns = closure.call(objs, 1);
-      } catch (LuaException e) {
-        throw new RuntimeException(e);
-      }
+      returns = closure.call(objs, 1);
       if (returns == null || returns.length == 0) {
         return null;
       }

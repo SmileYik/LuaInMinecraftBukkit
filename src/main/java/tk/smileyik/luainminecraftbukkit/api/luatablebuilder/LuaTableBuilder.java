@@ -1,8 +1,8 @@
 package tk.smileyik.luainminecraftbukkit.api.luatablebuilder;
 
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironment;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentInside;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironment;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentInside;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentOutside;
 import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilderInside;
 import tk.smileyik.luainminecraftbukkit.util.luatablebuilder.LuaTableBuilderOutside;
 

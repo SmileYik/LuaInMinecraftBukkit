@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class CommandRegister {
    * @param args 指令.
    */
   public void dispatch(CommandSender sender,
-                       Command command, String label, String[] args) {
+                       Command command, String label, String[] args) throws LuaFunctionException {
     if (args.length >= 1) {
       label = args[0];
       if (commandMapper.containsKey(label)) {

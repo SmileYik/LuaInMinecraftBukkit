@@ -1,5 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.util.luahelper;
 
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -17,7 +19,7 @@ public class LuaHttpHelper {
      * @param errorCallback 错误时调用.
      */
     public static void action(String urlString, byte[] body, PreOperation preOperation,
-                              Callback callback, ErrorCallback errorCallback) {
+                              Callback callback, ErrorCallback errorCallback) throws LuaFunctionException {
         try {
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -38,14 +40,14 @@ public class LuaHttpHelper {
     }
 
     public static interface PreOperation {
-        public void action(HttpURLConnection connection) throws ProtocolException;
+        public void action(HttpURLConnection connection) throws ProtocolException, LuaFunctionException;
     }
 
     public static interface Callback {
-        public void callback(int code, HttpURLConnection connection) throws IOException;
+        public void callback(int code, HttpURLConnection connection) throws IOException, LuaFunctionException;
     }
 
     public static interface ErrorCallback {
-        public void callback(Exception exception);
+        public void callback(Exception exception) throws LuaFunctionException;
     }
 }

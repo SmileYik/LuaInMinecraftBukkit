@@ -2,6 +2,7 @@ package tk.smileyik.luainminecraftbukkit.luaplugin;
 
 import tk.smileyik.luainminecraftbukkit.luaplugin.command.CommandRegister;
 import tk.smileyik.luainminecraftbukkit.luaplugin.event.EventRegister;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.task.TaskRegister;
 
 import java.io.File;
@@ -112,21 +113,21 @@ public interface LuaPluginManager {
    * 通过给定的路径去调用lua函数闭包.
    * @param vars 从下标0开始依次为插件id, 全局表, 全局函数, 其中全局表可以忽略.
    */
-  void callClosure(String[] vars);
+  void callClosure(String[] vars) throws LuaFunctionException;
 
   /**
    * 通过给定的路径与参数去调用lua函数闭包.
    * @param vars 从下标0开始依次为插件id, 全局表, 全局函数, 其中全局表可以忽略.
    * @param obj 要传给函数的参数.
    */
-  void callClosure(String[] vars, Object ... obj);
+  void callClosure(String[] vars, Object ... obj) throws LuaFunctionException;
 
   /**
    * 给定插件id与lua插件闭包实例去调用lua闭包.
    * @param id      脚本插件id
    * @param closure lua闭包在java中的实例
    */
-  void callClosure(String id, Object closure);
+  void callClosure(String id, Object closure) throws LuaFunctionException;
 
   /**
    * 给定插件id与lua插件闭包实例去调用lua闭包.
@@ -134,7 +135,7 @@ public interface LuaPluginManager {
    * @param closure lua函数对象
    * @param obj     要传给lua函数的参数.
    */
-  void callClosure(String id, Object closure, Object ... obj);
+  void callClosure(String id, Object closure, Object ... obj) throws LuaFunctionException;
 
   /**
    * 判断某个脚本插件是否已经加载.

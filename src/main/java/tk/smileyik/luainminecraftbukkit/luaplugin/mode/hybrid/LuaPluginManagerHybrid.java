@@ -2,6 +2,7 @@ package tk.smileyik.luainminecraftbukkit.luaplugin.mode.hybrid;
 
 import tk.smileyik.luainminecraftbukkit.luaplugin.AbstractLuaPluginManager;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.inside.LuaPluginManagerInside;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.LuaPluginManagerOutside;
 
@@ -87,7 +88,7 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
    * @param vars 从下标0开始依次为插件id, 全局表, 全局函数, 其中全局表可以忽略.
    */
   @Override
-  public void callClosure(String[] vars) {
+  public void callClosure(String[] vars) throws LuaFunctionException {
     if (plugins.containsKey(vars[0])) {
       switch (plugins.get(vars[0])) {
         case Inside:
@@ -107,7 +108,7 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
    * @param obj  要传给函数的参数.
    */
   @Override
-  public void callClosure(String[] vars, Object... obj) {
+  public void callClosure(String[] vars, Object... obj) throws LuaFunctionException {
     if (plugins.containsKey(vars[0])) {
       switch (plugins.get(vars[0])) {
         case Inside:
@@ -127,7 +128,7 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
    * @param closure lua闭包在java中的实例
    */
   @Override
-  public void callClosure(String id, Object closure) {
+  public void callClosure(String id, Object closure) throws LuaFunctionException {
     if (plugins.containsKey(id)) {
       switch (plugins.get(id)) {
         case Inside:
@@ -148,7 +149,7 @@ public class LuaPluginManagerHybrid extends AbstractLuaPluginManager {
    * @param obj     要传给lua函数的参数.
    */
   @Override
-  public void callClosure(String id, Object closure, Object... obj) {
+  public void callClosure(String id, Object closure, Object... obj) throws LuaFunctionException {
     if (plugins.containsKey(id)) {
       switch (plugins.get(id)) {
         case Inside:

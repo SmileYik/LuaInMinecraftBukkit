@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.util.luaenvironment;
+package tk.smileyik.luainminecraftbukkit.luaenvironment;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;

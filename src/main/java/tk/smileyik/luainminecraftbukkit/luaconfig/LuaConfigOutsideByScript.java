@@ -1,6 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.luaconfig;
 
 import org.keplerproject.luajava.LuaException;
+import tk.smileyik.luainminecraftbukkit.exception.FailedLoadLuaScriptException;
 
 import java.io.IOException;
 
@@ -16,8 +17,13 @@ public class LuaConfigOutsideByScript extends LuaConfigOutside {
   @Override
   public void config() throws IOException, LuaException {
     setGlobal("helper", LuaConfigOutsideHelper.class);
-    getEnvironment().LloadString(script);
-    int ret = getEnvironment().pcall(0, 0, 0);
+    int ret = getEnvironment().LloadString(script);
+    if (ret != 0) {
+      throw new FailedLoadLuaScriptException(
+              String.format("returned code %d, because: %s",
+                      ret, getEnvironment().toString(-1)));
+    }
+    ret = getEnvironment().pcall(0, 0, 0);
     if (ret != 0) {
       throw new RuntimeException("加载脚本失败." +
               getEnvironment().toString(-1));

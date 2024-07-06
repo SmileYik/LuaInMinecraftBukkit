@@ -4,6 +4,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,7 +32,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTask(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -46,7 +51,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTask(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -61,8 +70,11 @@ public class TaskRegister {
       return runTask(luaPlugin, (String) function);
     }
     return scheduler.runTask(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -78,8 +90,11 @@ public class TaskRegister {
       return runTask(luaPlugin, (String) function, obj);
     }
     return scheduler.runTask(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -93,7 +108,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTaskAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -109,7 +128,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTaskAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -124,8 +147,12 @@ public class TaskRegister {
       return runTaskAsync(luaPlugin, (String) function);
     }
     return scheduler.runTaskAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function);
+        try {
+            LuaInMinecraftBukkit.getPluginManager()
+                    .callClosure(luaPlugin.getId(), function);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -142,8 +169,12 @@ public class TaskRegister {
       return runTaskAsync(luaPlugin, (String) function, obj);
     }
     return scheduler.runTaskAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager()
+                    .callClosure(luaPlugin.getId(), function, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     });
   }
 
@@ -159,7 +190,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTaskLater(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -176,7 +211,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTaskLater(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -193,8 +232,11 @@ public class TaskRegister {
       return runTaskLater(luaPlugin, (String) function, delay);
     }
     return scheduler.runTaskLater(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -212,8 +254,11 @@ public class TaskRegister {
       return runTaskLater(luaPlugin, (String) function, delay, obj);
     }
     return scheduler.runTaskLater(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -229,7 +274,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTaskLaterAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -246,7 +295,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     return scheduler.runTaskLaterAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -263,8 +316,11 @@ public class TaskRegister {
       return runTaskLaterAsync(luaPlugin, (String) function, delay);
     }
     return scheduler.runTaskLaterAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -282,8 +338,11 @@ public class TaskRegister {
       return runTaskLaterAsync(luaPlugin, (String) function, delay, obj);
     }
     return scheduler.runTaskLaterAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay);
   }
 
@@ -300,7 +359,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     BukkitTask task = scheduler.runTaskTimer(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -320,7 +383,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     BukkitTask task = scheduler.runTaskTimer(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -340,8 +407,11 @@ public class TaskRegister {
       return runTimer(luaPlugin, (String) function, delay, period);
     }
     BukkitTask task = scheduler.runTaskTimer(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -362,8 +432,11 @@ public class TaskRegister {
       return runTimer(luaPlugin, (String) function, delay, period, obj);
     }
     BukkitTask task = scheduler.runTaskTimer(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -382,7 +455,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     BukkitTask task = scheduler.runTaskTimerAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -402,7 +479,11 @@ public class TaskRegister {
     functionId = String.format("%s.%s", luaPlugin.getId(), functionId);
     String[] vars = functionId.split("\\.");
     BukkitTask task = scheduler.runTaskTimerAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -422,8 +503,11 @@ public class TaskRegister {
       return runTimerAsync(luaPlugin, (String) function, delay, period);
     }
     BukkitTask task = scheduler.runTaskTimerAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;
@@ -444,8 +528,11 @@ public class TaskRegister {
       return runTimerAsync(luaPlugin, (String) function, delay, period, obj);
     }
     BukkitTask task = scheduler.runTaskTimerAsynchronously(plugin, () -> {
-      LuaInMinecraftBukkit.getPluginManager()
-              .callClosure(luaPlugin.getId(), function, obj);
+        try {
+            LuaInMinecraftBukkit.getPluginManager().callClosure(luaPlugin.getId(), function, obj);
+        } catch (LuaFunctionException e) {
+            throw new RuntimeException(e);
+        }
     }, delay, period);
     addTimer(luaPlugin, task);
     return task;

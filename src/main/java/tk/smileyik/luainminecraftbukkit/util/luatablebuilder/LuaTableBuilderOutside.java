@@ -3,7 +3,7 @@ package tk.smileyik.luainminecraftbukkit.util.luatablebuilder;
 import org.keplerproject.luajava.LuaException;
 import org.keplerproject.luajava.LuaObject;
 import org.keplerproject.luajava.LuaState;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentOutside;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentOutside;
 
 public class LuaTableBuilderOutside extends AbstractLuaTableBuilder<LuaObject> {
   private final LuaEnvironmentOutside luaEnvironment;

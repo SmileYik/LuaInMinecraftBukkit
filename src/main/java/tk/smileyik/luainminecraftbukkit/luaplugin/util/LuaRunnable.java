@@ -1,6 +1,7 @@
 package tk.smileyik.luainminecraftbukkit.luaplugin.util;
 
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 
 public class LuaRunnable implements Runnable {
   private final String id;
@@ -20,10 +21,11 @@ public class LuaRunnable implements Runnable {
 
   @Override
   public void run() {
-    LuaInMinecraftBukkit.getPluginManager().callClosure(
-            vars,
-            obj
-    );
+      try {
+          LuaInMinecraftBukkit.getPluginManager().callClosure(vars, obj);
+      } catch (LuaFunctionException e) {
+          throw new RuntimeException(e);
+      }
   }
 
   public String getId() {

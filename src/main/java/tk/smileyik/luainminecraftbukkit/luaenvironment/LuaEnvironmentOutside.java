@@ -1,4 +1,4 @@
-package tk.smileyik.luainminecraftbukkit.util.luaenvironment;
+package tk.smileyik.luainminecraftbukkit.luaenvironment;
 
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;

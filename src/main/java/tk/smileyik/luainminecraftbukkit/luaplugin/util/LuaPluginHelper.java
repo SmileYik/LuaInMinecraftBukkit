@@ -3,6 +3,7 @@ package tk.smileyik.luainminecraftbukkit.luaplugin.util;
 import org.bukkit.plugin.Plugin;
 import tk.smileyik.luainminecraftbukkit.LuaInMinecraftBukkit;
 import tk.smileyik.luainminecraftbukkit.luaplugin.LuaPlugin;
+import tk.smileyik.luainminecraftbukkit.luaplugin.exception.LuaFunctionException;
 import tk.smileyik.luainminecraftbukkit.luaplugin.mode.outside.LuaPluginManagerOutside;
 import tk.smileyik.luainminecraftbukkit.util.luahelper.LuaHelper;
 import tk.smileyik.luainminecraftbukkit.util.luahelper.LuaHttpHelper;
@@ -67,7 +68,7 @@ public class LuaPluginHelper extends LuaHelper {
    * @param errorCallback 一个Lua函数闭包，其只在运行过程中出现错误时调用，会将Exception实例传给闭包.
    */
   public static void httpAction(LuaPlugin plugin, String urlString, byte[] body, Object preOperation,
-                                Object callback, Object errorCallback) {
+                                Object callback, Object errorCallback) throws LuaFunctionException {
     LuaHttpHelper.action(
             urlString, body,
             con -> {
@@ -104,7 +105,7 @@ public class LuaPluginHelper extends LuaHelper {
    */
   public static void httpAction(LuaPlugin plugin, String urlString, String method, byte[] body, int connectTimeout,
                                 int readTimeout, boolean instanceFollowRedirects, Map<String, String> header,
-                                boolean useCaches, Object callback, Object errorCallback) {
+                                boolean useCaches, Object callback, Object errorCallback) throws LuaFunctionException {
     LuaHttpHelper.action(
             urlString, body,
             con -> {
@@ -155,7 +156,7 @@ public class LuaPluginHelper extends LuaHelper {
    */
   public static void httpAction(LuaPlugin plugin, String urlString, String method, String body, String bodyEncode, int connectTimeout,
                                 int readTimeout, boolean instanceFollowRedirects, Map<String, String> header,
-                                boolean useCaches, Object callback, Object errorCallback) {
+                                boolean useCaches, Object callback, Object errorCallback) throws LuaFunctionException {
     try {
       httpAction(plugin, urlString, method, body == null ? null : body.getBytes(bodyEncode), connectTimeout,
               readTimeout, instanceFollowRedirects, header, useCaches, callback, errorCallback);
@@ -181,7 +182,7 @@ public class LuaPluginHelper extends LuaHelper {
   public static void httpGet(LuaPlugin plugin, String urlString, int connectTimeout, int readTimeout,
                              boolean instanceFollowRedirects, Map<String, String> header,
                              boolean useCaches, Object callback,
-                             Object errorCallback) {
+                             Object errorCallback) throws LuaFunctionException {
     httpAction(plugin, urlString, "GET", null, connectTimeout, readTimeout,
             instanceFollowRedirects, header, useCaches, callback, errorCallback);
   }
@@ -199,7 +200,7 @@ public class LuaPluginHelper extends LuaHelper {
    */
   public static void httpGet(LuaPlugin plugin, String urlString, int connectTimeout, int readTimeout,
                              boolean instanceFollowRedirects, boolean useCaches,
-                             Object callback, Object errorCallback) {
+                             Object callback, Object errorCallback) throws LuaFunctionException {
     httpAction(plugin, urlString, "GET", null, connectTimeout, readTimeout,
             instanceFollowRedirects, null, useCaches, callback, errorCallback);
   }

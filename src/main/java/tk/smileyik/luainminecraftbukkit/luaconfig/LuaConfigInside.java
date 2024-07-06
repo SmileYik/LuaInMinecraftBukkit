@@ -3,16 +3,13 @@ package tk.smileyik.luainminecraftbukkit.luaconfig;
 import org.luaj.vm2.LuaClosure;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfig;
 import tk.smileyik.luainminecraftbukkit.api.luaconfig.LuaConfigEntity;
 import tk.smileyik.luainminecraftbukkit.api.luatablebuilder.LuaTableBuilder;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigClosureReturnException;
 import tk.smileyik.luainminecraftbukkit.luaconfig.exception.LuaConfigNotClosureException;
-import tk.smileyik.luainminecraftbukkit.util.LuaValueHelper;
 import tk.smileyik.luainminecraftbukkit.util.LuaValueUtil;
-import tk.smileyik.luainminecraftbukkit.util.luaenvironment.LuaEnvironmentInside;
-import tk.smileyik.luainminecraftbukkit.util.luahelper.LuaHelper;
+import tk.smileyik.luainminecraftbukkit.luaenvironment.LuaEnvironmentInside;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
