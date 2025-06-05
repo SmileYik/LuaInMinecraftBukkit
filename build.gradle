@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
     //id "de.jjohannes.extra-java-module-info" version "0.1"
 }
 
@@ -47,6 +48,12 @@ test {
     useJUnitPlatform()
 }
 
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+
 // 删除plugins文件夹中以前构建的文件.
 task deleteOldBuilds(type: Delete) {
     for (final def f in file("${projectDir}/server/plugins/").listFiles()) {
@@ -57,10 +64,16 @@ task deleteOldBuilds(type: Delete) {
     }
 }
 
-// 复制当前版本到plugins文件夹中z
+// 复制当前版本到plugins文件夹中
 task copyTask(type: Copy) {
     dependsOn(build)
     dependsOn(deleteOldBuilds)
     from "${buildDir}/libs/${archivesBaseName}-${version}.jar"
     into "${projectDir}/server/plugins/"
+}
+
+for (final def f in file("${projectDir}/models/").listFiles()) {
+    if (f.isFile()) {
+        apply from: f
+    }
 }

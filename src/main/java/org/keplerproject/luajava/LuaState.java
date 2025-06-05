@@ -144,20 +144,20 @@ public class LuaState {
       } else if (retType == Short.TYPE) {
         return db.shortValue();
       }
-    } else if (retType.isAssignableFrom(Number.class)) {
+    } else if (Number.class.isAssignableFrom(retType)) {
       // Checks all possibilities of number types
       if (retType.isAssignableFrom(Integer.class)) {
-        return db.intValue();
+        return (Integer) db.intValue();
       } else if (retType.isAssignableFrom(Long.class)) {
-        return db.longValue();
+        return (Long) db.longValue();
       } else if (retType.isAssignableFrom(Float.class)) {
-        return db.floatValue();
+        return (Float) db.floatValue();
       } else if (retType.isAssignableFrom(Double.class)) {
-        return db;
+        return (Double) db;
       } else if (retType.isAssignableFrom(Byte.class)) {
-        return db.byteValue();
+        return (Byte) db.byteValue();
       } else if (retType.isAssignableFrom(Short.class)) {
-        return db.shortValue();
+        return (Short) db.shortValue();
       }
     }
 
