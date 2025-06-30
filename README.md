@@ -4,6 +4,8 @@
 
 LuaInMinecraftBukkit是一个可以让Minecraft Bukkit服务端及其的延伸端能使用lua脚本, 并利用lua脚本来编写插件.
 
+## 此项目已经过时, 我们 [LuaInMinecraftBukkit II](https://github.com/SmileYik/LuaInMinecraftBukkitII) 见!
+
 ### 快速开始文档
 
 [快速开始文档]([https://blog.smileyik.tk/?blog=other&album=MinecraftPost&post=LuaInMinecraftBukkit-quickStart](https://github.com/SmileYik/LuaInMinecraftBukkt/wiki))
